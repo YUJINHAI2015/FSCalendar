@@ -150,6 +150,10 @@
         _calendar.appearance.todayColor = [UIColor colorWithRed:39/255.0 green:104/255.0 blue:243/255.0 alpha:0.2];
         // 选中今日背景颜色
         _calendar.appearance.todaySelectionColor = [UIColor colorWithRed:39/255.0 green:104/255.0 blue:243/255.0 alpha:0.2];
+        // 星期六的颜色
+        _calendar.calendarWeekdayView.weekdayLabels[6].textColor = [UIColor colorWithRed:39/255.0 green:104/255.0 blue:243/255.0 alpha:0.6];
+        // 星期日的颜色
+        _calendar.calendarWeekdayView.weekdayLabels[5].textColor = [UIColor colorWithRed:39/255.0 green:104/255.0 blue:243/255.0 alpha:0.6];
 
         [self.view addSubview:_calendar];
     }
@@ -221,6 +225,29 @@
 {
     NSLog(@"%s %@", __FUNCTION__, [self.dateFormatter stringFromDate:calendar.currentPage]);
     [self.calendarHeaderView reloadData];
+}
+- (void)calendar:(FSCalendar *)calendar willDisplayCell:(FSCalendarCell *)cell forDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition {
+
+}
+- (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleDefaultColorForDate:(NSDate *)date {
+    
+    NSCalendar * myCalendar = [NSCalendar currentCalendar];
+    myCalendar.timeZone = [NSTimeZone systemTimeZone];
+    NSInteger week = [[myCalendar components:NSCalendarUnitWeekday fromDate:date] weekday];
+    
+    if (week == 1 || week == 7) {
+        return [UIColor colorWithRed:39/255.0 green:104/255.0 blue:243/255.0 alpha:0.6];
+    }
+    return nil;
+}
+
+- (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleSelectionColorForDate:(NSDate *)date {
+    
+    if ([[self.dateFormatter stringFromDate:date] isEqualToString:[self.dateFormatter stringFromDate:[NSDate date]]]) {
+        return [UIColor colorWithRed:94/255.0 green:172/255.0 blue:12/255.0 alpha:1];
+    } else {
+        return [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1];
+    }
 }
 
 #pragma mark - <UITableViewDataSource>
