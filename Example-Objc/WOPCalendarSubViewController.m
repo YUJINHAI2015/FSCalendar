@@ -11,6 +11,7 @@
 
 @interface WOPCalendarSubViewController ()<UITableViewDataSource,UITableViewDelegate>
 
+@property (strong, nonatomic) NSArray *selectedDates;
 
 @end
 
@@ -32,6 +33,10 @@
     }
     return _tableView;
 }
+- (void)didSelectedDates:(NSArray *)dates {
+    self.selectedDates = dates;
+    [self.tableView reloadData];
+}
 #pragma mark - <UITableViewDataSource>
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -41,14 +46,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return self.selectedDates.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    cell.textLabel.text = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
+    NSString *text = self.selectedDates[indexPath.row];
+    cell.textLabel.text =text;
     return cell;
     
 }

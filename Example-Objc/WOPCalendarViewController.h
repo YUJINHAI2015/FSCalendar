@@ -12,8 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WOPCalendarViewController : UIViewController
 
-@property (strong, nonatomic) UIPanGestureRecognizer *scopeGesture;
-
 @end
 
 NS_ASSUME_NONNULL_END

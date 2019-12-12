@@ -71,19 +71,19 @@
     
 }
 
-//- (void)previousClicked:(id)sender
-//{
-//    NSDate *currentMonth = self.calendar.currentPage;
-//    NSDate *previousMonth = [self.gregorian dateByAddingUnit:NSCalendarUnitMonth value:-1 toDate:currentMonth options:0];
-//    [self.calendar setCurrentPage:previousMonth animated:YES];
-//}
-//
-//- (void)nextClicked:(id)sender
-//{
-//    NSDate *currentMonth = self.calendar.currentPage;
-//    NSDate *nextMonth = [self.gregorian dateByAddingUnit:NSCalendarUnitMonth value:1 toDate:currentMonth options:0];
-//    [self.calendar setCurrentPage:nextMonth animated:YES];
-//}
+- (void)previousClicked:(id)sender
+{
+    NSDate *currentMonth = self.calendar.currentPage;
+    NSDate *previousMonth = [self.gregorian dateByAddingUnit:NSCalendarUnitMonth value:-1 toDate:currentMonth options:0];
+    [self.calendar setCurrentPage:previousMonth animated:YES];
+}
+
+- (void)nextClicked:(id)sender
+{
+    NSDate *currentMonth = self.calendar.currentPage;
+    NSDate *nextMonth = [self.gregorian dateByAddingUnit:NSCalendarUnitMonth value:1 toDate:currentMonth options:0];
+    [self.calendar setCurrentPage:nextMonth animated:YES];
+}
 
 
 @end

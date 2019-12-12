@@ -8,8 +8,6 @@
 
 #import "WOPCalendarHeaderView.h"
 #import "FSCalendar.h"
-#import "FSCalendarExtensions.h"
-#import "FSCalendarDynamicHeader.h"
 
 @interface WOPCalendarHeaderView ()
 
@@ -51,12 +49,26 @@
     layer.frame = self.bounds;
     layer.path = path.CGPath;
     self.layer.mask = layer;
-
 }
 
 - (void)reloadData {
     
     self.yearLabel.text = [self.yearDateFormatter stringFromDate:self.calendar.currentPage];
     self.monthLabel.text = [self.monthDateFormatter stringFromDate:self.calendar.currentPage];
+    [self setNeedsDisplay];
+    NSLog(@"-----%@",self.calendar.currentPage);
+}
+
+#pragma mark - Action
+
+- (IBAction)lastMonthAction:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(calendarHeaderView:didSelect:monthStatus:)]) {
+        [self.delegate calendarHeaderView:self didSelect:self.calendar monthStatus:WOPCalendarHeaderViewMonthLast];
+    }
+}
+- (IBAction)nextMonthAction:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(calendarHeaderView:didSelect:monthStatus:)]) {
+        [self.delegate calendarHeaderView:self didSelect:self.calendar monthStatus:WOPCalendarHeaderViewMonthNext];
+    }
 }
 @end

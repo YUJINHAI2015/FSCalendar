@@ -12,13 +12,14 @@
 #import "Masonry.h"
 #import "FSCalendarCollectionView.h"
 #import "WOPCalendarSubViewController.h"
-@interface WOPCalendarViewController ()<FSCalendarDataSource,FSCalendarDelegate,UIGestureRecognizerDelegate>
+@interface WOPCalendarViewController ()<FSCalendarDataSource,FSCalendarDelegate,WOPCalendarHeaderViewDelegate,UIGestureRecognizerDelegate>
 {
     void * _KVOContext;
 }
 
 @property (strong, nonatomic) FSCalendar *calendar;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
+@property (strong, nonatomic) UIPanGestureRecognizer *scopeGesture;
 @property (strong, nonatomic) WOPCalendarHeaderView *calendarHeaderView;
 @property (strong, nonatomic) WOPCalendarSubViewController *calendarSubViewController;
 
@@ -41,6 +42,11 @@
     [self p_initUI];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    
+    // 默认选中今天
+    NSString *today = [self.dateFormatter stringFromDate:self.calendar.today];
+    [self.calendarSubViewController didSelectedDates:@[today]];
+
 }
 - (void)p_initUI {
     [self.calendar mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -125,6 +131,7 @@
     if (monthPosition == FSCalendarMonthPositionNext || monthPosition == FSCalendarMonthPositionPrevious) {
         [calendar setCurrentPage:date animated:YES];
     }
+    [self.calendarSubViewController didSelectedDates:[selectedDates copy]];
 }
 
 - (void)calendarCurrentPageDidChange:(FSCalendar *)calendar
@@ -150,12 +157,20 @@
 - (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleSelectionColorForDate:(NSDate *)date {
     
     if ([[self.dateFormatter stringFromDate:date] isEqualToString:[self.dateFormatter stringFromDate:[NSDate date]]]) {
+        [self.calendarHeaderView reloadData];
         return Calendar_Today_TextColor;
     } else {
         return Calendar_Normal_TextColor;
     }
 }
-
+#pragma mark - WOPCalendarHeaderViewDelegate
+- (void)calendarHeaderView:(FSCalendarHeaderView *)headerView didSelect:(FSCalendar *)currentCalendar monthStatus:(WOPCalendarHeaderViewMonthStatus)monthStatus {
+    NSInteger value = monthStatus == WOPCalendarHeaderViewMonthLast ? -1 : 1;
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDate *currentMonth = self.calendar.currentPage;
+    NSDate *month = [gregorian dateByAddingUnit:NSCalendarUnitMonth value:value toDate:currentMonth options:0];
+    [self.calendar setCurrentPage:month animated:YES];
+}
 #pragma mark - setter/getter
 - (WOPCalendarSubViewController *)calendarSubViewController {
     if (!_calendarSubViewController) {
@@ -184,6 +199,7 @@
         headerView.backgroundColor = Calendar_Header_BackgroundColor;
         headerView.calendar = self.calendar;
         headerView.scrollEnabled = YES;
+        headerView.delegate = self;
         _calendarHeaderView = headerView;
         // 隐藏默认的头部
         self.calendar.calendarHeaderView.collectionView.hidden = YES;

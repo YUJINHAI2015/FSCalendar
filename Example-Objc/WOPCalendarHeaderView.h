@@ -11,8 +11,25 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WOPCalendarHeaderView : FSCalendarHeaderView
+@protocol WOPCalendarHeaderViewDelegate <NSObject>
+
+typedef NS_ENUM(NSUInteger, WOPCalendarHeaderViewMonthStatus) {
+    WOPCalendarHeaderViewMonthLast,
+    WOPCalendarHeaderViewMonthNext
+};
+
+@optional
+
+- (void)calendarHeaderView:(FSCalendarHeaderView *)headerView
+                 didSelect:(FSCalendar *)currentCalendar
+               monthStatus:(WOPCalendarHeaderViewMonthStatus)monthStatus;
+//- (void)calendarHeaderView:(FSCalendarHeaderView *)headerView didSelect:(FSCalendar *)currentCalendar;
 
 @end
 
+@interface WOPCalendarHeaderView : FSCalendarHeaderView
+
+@property (nonatomic, assign) id<WOPCalendarHeaderViewDelegate> delegate;
+
+@end
 NS_ASSUME_NONNULL_END

@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface WOPCalendarSubViewController : UIViewController
 
 @property (strong, nonatomic) UITableView *tableView;
-
+- (void)didSelectedDates:(NSArray *)dates;
 @end
 
 NS_ASSUME_NONNULL_END
