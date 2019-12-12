@@ -207,7 +207,7 @@
         self.calendar.headerHeight = Calendar_Header_Height;
         self.calendar.weekdayHeight = Calendar_Weekday_Height;
         self.calendar.layer.cornerRadius = Calendar_CornerRadius;
-        self.calendar.layer.masksToBounds = YES;
+//        self.calendar.layer.masksToBounds = YES;
         
         [self.view bringSubviewToFront:self.calendarHeaderView];
         [self.view addSubview:self.calendarHeaderView];
@@ -223,6 +223,11 @@
         _calendar.backgroundColor = Calendar_ContentView_BackgroundColor;
         _calendar.allowsMultipleSelection = YES;
         _calendar.swipeToChooseGesture.enabled = YES;
+        _calendar.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+        _calendar.layer.shadowOffset = CGSizeMake(5, 5);
+        _calendar.layer.shadowOpacity = 0.3;
+        _calendar.layer.shadowRadius = 3.0;
+        
         // 星期一
         _calendar.firstWeekday = 2;
         // 每月未显示日期
