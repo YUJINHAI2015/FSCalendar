@@ -18,6 +18,7 @@
 @property (strong, nonatomic) FSCalendar *calendar;
 @property (strong, nonatomic) UIPanGestureRecognizer *scopeGesture;
 @property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 @end
 
@@ -27,6 +28,8 @@
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self p_initUI];
+    self.dateFormatter = [[NSDateFormatter alloc] init];
+    self.dateFormatter.dateFormat = @"yyyy/MM/dd";
 
 }
 - (void)loadView
@@ -37,6 +40,7 @@
 }
 - (void)p_initUI {
     [self.calendar mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 450 for iPad and 300 for iPhone
         CGFloat height = [[UIDevice currentDevice].model hasPrefix:@"iPad"] ? 450 : 300;
         make.height.mas_equalTo(height);
         make.top.mas_equalTo(self.view.mas_top);
@@ -77,7 +81,6 @@
 }
 - (FSCalendar *)calendar {
     if (!_calendar) {
-        // 450 for iPad and 300 for iPhone
         _calendar = [[FSCalendar alloc] initWithFrame:CGRectZero];
         _calendar.dataSource = self;
         _calendar.delegate = self;
@@ -86,7 +89,7 @@
         _calendar.appearance.caseOptions = FSCalendarCaseOptionsHeaderUsesUpperCase;
         [_calendar addObserver:self forKeyPath:@"scope" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:_KVOContext];
         _calendar.placeholderType = FSCalendarPlaceholderTypeNone;
-        _calendar.scope = FSCalendarScopeWeek;
+        _calendar.scope = FSCalendarScopeMonth;
         
         [_calendar selectDate:[NSDate date] scrollToDate:YES];
         
@@ -139,55 +142,48 @@
     
 - (void)calendar:(FSCalendar *)calendar boundingRectWillChange:(CGRect)bounds animated:(BOOL)animated
 {
-    //    NSLog(@"%@",(calendar.scope==FSCalendarScopeWeek?@"week":@"month"));
-//    _calendarHeightConstraint.constant = CGRectGetHeight(bounds);
+    [self.calendar mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(CGRectGetHeight(bounds));
+    }];
     [self.view layoutIfNeeded];
 }
 
 - (void)calendar:(FSCalendar *)calendar didSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition
 {
-//    NSLog(@"did select date %@",[self.dateFormatter stringFromDate:date]);
-//
-//    NSMutableArray *selectedDates = [NSMutableArray arrayWithCapacity:calendar.selectedDates.count];
-//    [calendar.selectedDates enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//        [selectedDates addObject:[self.dateFormatter stringFromDate:obj]];
-//    }];
-//    NSLog(@"selected dates is %@",selectedDates);
-//    if (monthPosition == FSCalendarMonthPositionNext || monthPosition == FSCalendarMonthPositionPrevious) {
-//        [calendar setCurrentPage:date animated:YES];
-//    }
+    NSLog(@"did select date %@",[self.dateFormatter stringFromDate:date]);
+
+    NSMutableArray *selectedDates = [NSMutableArray arrayWithCapacity:calendar.selectedDates.count];
+    [calendar.selectedDates enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [selectedDates addObject:[self.dateFormatter stringFromDate:obj]];
+    }];
+    NSLog(@"selected dates is %@",selectedDates);
+    if (monthPosition == FSCalendarMonthPositionNext || monthPosition == FSCalendarMonthPositionPrevious) {
+        [calendar setCurrentPage:date animated:YES];
+    }
 }
 
 - (void)calendarCurrentPageDidChange:(FSCalendar *)calendar
 {
-//    NSLog(@"%s %@", __FUNCTION__, [self.dateFormatter stringFromDate:calendar.currentPage]);
+    NSLog(@"%s %@", __FUNCTION__, [self.dateFormatter stringFromDate:calendar.currentPage]);
 }
 
 #pragma mark - <UITableViewDataSource>
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger numbers[2] = {2,20};
-    return numbers[section];
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (indexPath.section == 0) {
-//        NSString *identifier = @[@"cell_month",@"cell_week"][indexPath.row];
-//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-//        return cell;
-//    } else {
-//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-//        return cell;
-//    }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    cell.textLabel.text = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
     return cell;
 
 }
@@ -197,10 +193,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    if (indexPath.section == 0) {
-//        FSCalendarScope selectedScope = indexPath.row == 0 ? FSCalendarScopeMonth : FSCalendarScopeWeek;
-//        [self.calendar setScope:selectedScope animated:self.animationSwitch.on];
-//    }
+    if (indexPath.section == 0) {
+        FSCalendarScope selectedScope = indexPath.row == 0 ? FSCalendarScopeMonth : FSCalendarScopeWeek;
+        [self.calendar setScope:selectedScope animated:YES];
+    }
     
 }
 
