@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		240FBE6523A1177E00058FB3 /* WOPCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 240FBE6423A1177E00058FB3 /* WOPCalendarViewController.m */; };
+		24B7C42323A1DD970033EC14 /* WOPCalendarHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B7C42223A1DD970033EC14 /* WOPCalendarHeaderView.m */; };
+		24B7C42523A1E3D00033EC14 /* WOPCalendarHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24B7C42423A1E3D00033EC14 /* WOPCalendarHeaderView.xib */; };
 		30024F951BD1015300B1C04C /* DelegateAppearanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30024F941BD1015300B1C04C /* DelegateAppearanceViewController.m */; };
 		301F79CB1DFD39E700D8631E /* FSCalendarDelegationProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 301F79C91DFD39E700D8631E /* FSCalendarDelegationProxy.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		301F79CC1DFD39E700D8631E /* FSCalendarDelegationProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 301F79CA1DFD39E700D8631E /* FSCalendarDelegationProxy.m */; };
@@ -104,6 +106,9 @@
 /* Begin PBXFileReference section */
 		240FBE6323A1177E00058FB3 /* WOPCalendarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOPCalendarViewController.h; sourceTree = "<group>"; };
 		240FBE6423A1177E00058FB3 /* WOPCalendarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOPCalendarViewController.m; sourceTree = "<group>"; };
+		24B7C42123A1DD970033EC14 /* WOPCalendarHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOPCalendarHeaderView.h; sourceTree = "<group>"; };
+		24B7C42223A1DD970033EC14 /* WOPCalendarHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOPCalendarHeaderView.m; sourceTree = "<group>"; };
+		24B7C42423A1E3D00033EC14 /* WOPCalendarHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WOPCalendarHeaderView.xib; sourceTree = "<group>"; };
 		30024F931BD1015300B1C04C /* DelegateAppearanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DelegateAppearanceViewController.h; sourceTree = SOURCE_ROOT; };
 		30024F941BD1015300B1C04C /* DelegateAppearanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DelegateAppearanceViewController.m; sourceTree = SOURCE_ROOT; };
 		301F79C91DFD39E700D8631E /* FSCalendarDelegationProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarDelegationProxy.h; sourceTree = "<group>"; };
@@ -207,6 +212,9 @@
 			children = (
 				240FBE6323A1177E00058FB3 /* WOPCalendarViewController.h */,
 				240FBE6423A1177E00058FB3 /* WOPCalendarViewController.m */,
+				24B7C42123A1DD970033EC14 /* WOPCalendarHeaderView.h */,
+				24B7C42223A1DD970033EC14 /* WOPCalendarHeaderView.m */,
+				24B7C42423A1E3D00033EC14 /* WOPCalendarHeaderView.xib */,
 			);
 			name = WOPCalendar;
 			sourceTree = "<group>";
@@ -303,7 +311,6 @@
 				B12734ED8A89DAFD9755B514 /* Pods-FSCalendarExample.debug.xcconfig */,
 				31D3048D439FB2BB3AF5A115 /* Pods-FSCalendarExample.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -574,6 +581,7 @@
 			files = (
 				F9564BF01E2DB8CA00FC9342 /* LaunchScreen.xib in Resources */,
 				EE638CDA1B89DC0A0006DD1A /* Main.storyboard in Resources */,
+				24B7C42523A1E3D00033EC14 /* WOPCalendarHeaderView.xib in Resources */,
 				309A42011D992C4A004E86CB /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -656,6 +664,7 @@
 				308B58D81CC08FFA004E812D /* ButtonsViewController.m in Sources */,
 				30B0BAD11B8D8E23004B9476 /* FSCalendarAppearance.m in Sources */,
 				30CEF9011C950C1F008EAFB1 /* FSCalendarTransitionCoordinator.m in Sources */,
+				24B7C42323A1DD970033EC14 /* WOPCalendarHeaderView.m in Sources */,
 				EEC9C03A1BDC9E7000383A07 /* FSCalendarCollectionView.m in Sources */,
 				301F79CC1DFD39E700D8631E /* FSCalendarDelegationProxy.m in Sources */,
 				F988B1C81EA6046700609E59 /* RangePickerViewController.m in Sources */,

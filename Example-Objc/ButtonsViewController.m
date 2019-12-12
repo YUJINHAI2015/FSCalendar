@@ -51,23 +51,23 @@
     [self.view addSubview:calendar];
     self.calendar = calendar;
     
-//    UIButton *previousButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    previousButton.frame = CGRectMake(0, 64+5, 95, 34);
-//    previousButton.backgroundColor = [UIColor whiteColor];
-//    previousButton.titleLabel.font = [UIFont systemFontOfSize:15];
-//    [previousButton setImage:[UIImage imageNamed:@"icon_prev"] forState:UIControlStateNormal];
-//    [previousButton addTarget:self action:@selector(previousClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:previousButton];
-//    self.previousButton = previousButton;
-//
-//    UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    nextButton.frame = CGRectMake(CGRectGetWidth(self.view.frame)-95, 64+5, 95, 34);
-//    nextButton.backgroundColor = [UIColor whiteColor];
-//    nextButton.titleLabel.font = [UIFont systemFontOfSize:15];
-//    [nextButton setImage:[UIImage imageNamed:@"icon_next"] forState:UIControlStateNormal];
-//    [nextButton addTarget:self action:@selector(nextClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:nextButton];
-//    self.nextButton = nextButton;
+    UIButton *previousButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    previousButton.frame = CGRectMake(0, 64+5, 95, 34);
+    previousButton.backgroundColor = [UIColor whiteColor];
+    previousButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    [previousButton setImage:[UIImage imageNamed:@"icon_prev"] forState:UIControlStateNormal];
+    [previousButton addTarget:self action:@selector(previousClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:previousButton];
+    self.previousButton = previousButton;
+
+    UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    nextButton.frame = CGRectMake(CGRectGetWidth(self.view.frame)-95, 64+5, 95, 34);
+    nextButton.backgroundColor = [UIColor whiteColor];
+    nextButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    [nextButton setImage:[UIImage imageNamed:@"icon_next"] forState:UIControlStateNormal];
+    [nextButton addTarget:self action:@selector(nextClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:nextButton];
+    self.nextButton = nextButton;
     
 }
 

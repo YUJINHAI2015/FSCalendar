@@ -8,7 +8,9 @@
 
 #import "WOPCalendarViewController.h"
 #import "FSCalendar.h"
+#import "WOPCalendarHeaderView.h"
 #import "Masonry.h"
+#import "FSCalendarCollectionView.h"
 
 @interface WOPCalendarViewController ()<UITableViewDataSource,UITableViewDelegate,FSCalendarDataSource,FSCalendarDelegate,UIGestureRecognizerDelegate>
 {
@@ -19,6 +21,8 @@
 @property (strong, nonatomic) UIPanGestureRecognizer *scopeGesture;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
+
+@property (strong, nonatomic) WOPCalendarHeaderView *calendarHeaderView;
 
 @end
 
@@ -41,19 +45,27 @@
 - (void)p_initUI {
     [self.calendar mas_makeConstraints:^(MASConstraintMaker *make) {
         // 450 for iPad and 300 for iPhone
-        CGFloat height = [[UIDevice currentDevice].model hasPrefix:@"iPad"] ? 450 : 300;
+        CGFloat height = [[UIDevice currentDevice].model hasPrefix:@"iPad"] ? 450 : 316;
         make.height.mas_equalTo(height);
-        make.top.mas_equalTo(self.view.mas_top);
-        make.leading.mas_equalTo(self.view.mas_leading);
-        make.trailing.mas_equalTo(self.view.mas_trailing);
+        make.top.mas_equalTo(self.view.mas_top).offset(5);
+        make.leading.mas_equalTo(self.view.mas_leading).offset(15);
+        make.trailing.mas_equalTo(self.view.mas_trailing).offset(-15);
     }];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.calendar.mas_bottom);
+        make.top.mas_equalTo(self.calendar.mas_bottom).offset(20);
         make.bottom.mas_equalTo(self.view.mas_bottom);
         make.leading.mas_equalTo(self.view.mas_leading);
         make.trailing.mas_equalTo(self.view.mas_trailing);
     }];
+    
+    [self.calendarHeaderView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(66);
+        make.top.mas_equalTo(self.calendar);
+        make.leading.mas_equalTo(self.calendar);
+        make.trailing.mas_equalTo(self.calendar);
+    }];
+    
 }
 -(UIPanGestureRecognizer *)scopeGesture {
     if (!_scopeGesture) {
@@ -79,22 +91,65 @@
     }
     return _tableView;
 }
+- (WOPCalendarHeaderView *)calendarHeaderView {
+    if (!_calendarHeaderView) {
+        WOPCalendarHeaderView *headerView = [[WOPCalendarHeaderView alloc] initWithFrame:CGRectZero];
+        headerView.backgroundColor = [UIColor colorWithRed:54/255.0 green:106/255.0 blue:234/255.0 alpha:1];
+        headerView.calendar = self.calendar;
+        headerView.scrollEnabled = YES;
+        _calendarHeaderView = headerView;
+        // 隐藏默认的头部
+        self.calendar.calendarHeaderView.collectionView.hidden = YES;
+        self.calendar.calendarHeaderView.hidden = YES;
+        self.calendar.headerHeight = 66;
+        self.calendar.weekdayHeight = 44;
+        self.calendar.layer.cornerRadius = 10;
+        self.calendar.layer.masksToBounds = YES;
+
+        [self.view bringSubviewToFront:self.calendarHeaderView];
+        [self.view addSubview:self.calendarHeaderView];
+    }
+    return _calendarHeaderView;
+}
 - (FSCalendar *)calendar {
     if (!_calendar) {
         _calendar = [[FSCalendar alloc] initWithFrame:CGRectZero];
+        [_calendar addObserver:self forKeyPath:@"scope" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:_KVOContext];
         _calendar.dataSource = self;
         _calendar.delegate = self;
         _calendar.backgroundColor = [UIColor whiteColor];
-        _calendar.appearance.headerMinimumDissolvedAlpha = 0;
-        _calendar.appearance.caseOptions = FSCalendarCaseOptionsHeaderUsesUpperCase;
-        [_calendar addObserver:self forKeyPath:@"scope" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:_KVOContext];
-        _calendar.placeholderType = FSCalendarPlaceholderTypeNone;
+        _calendar.allowsMultipleSelection = YES;
+        _calendar.swipeToChooseGesture.enabled = YES;
+        // 星期一
+        _calendar.firstWeekday = 2;
+        // 每月未显示日期
+        _calendar.placeholderType = FSCalendarPlaceholderTypeFillHeadTail;
+        // 星期缩写
+        _calendar.appearance.caseOptions = FSCalendarCaseOptionsWeekdayUsesUpperCase;
+        // 显示月份
         _calendar.scope = FSCalendarScopeMonth;
-        
+        // 显示今日
         [_calendar selectDate:[NSDate date] scrollToDate:YES];
-        
         // For UITest
         _calendar.accessibilityIdentifier = @"calendar";
+        // 星期数字颜色
+        _calendar.appearance.weekdayTextColor = [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1];
+        // 星期数字大小
+        _calendar.appearance.weekdayFont = [UIFont fontWithName:@"PingFangSC-Semibold" size:14];
+        // 星期大写
+        _calendar.appearance.headerDateFormat = @"MMMM";
+        // 默认数字颜色
+        _calendar.appearance.titleDefaultColor = [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1];
+        // 选中数字颜色
+        _calendar.appearance.titleSelectionColor = [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1];
+        // 数字大小
+        _calendar.appearance.titleFont = [UIFont fontWithName:@"PingFangSC-Semibold" size:14];
+        // 选中背景颜色
+        _calendar.appearance.selectionColor = [UIColor colorWithRed:39/255.0 green:104/255.0 blue:243/255.0 alpha:0.2];
+        // 点击今日背景颜色
+        _calendar.appearance.todayColor = [UIColor colorWithRed:39/255.0 green:104/255.0 blue:243/255.0 alpha:0.2];
+        // 选中今日背景颜色
+        _calendar.appearance.todaySelectionColor = [UIColor colorWithRed:39/255.0 green:104/255.0 blue:243/255.0 alpha:0.2];
 
         [self.view addSubview:_calendar];
     }
@@ -165,6 +220,7 @@
 - (void)calendarCurrentPageDidChange:(FSCalendar *)calendar
 {
     NSLog(@"%s %@", __FUNCTION__, [self.dateFormatter stringFromDate:calendar.currentPage]);
+    [self.calendarHeaderView reloadData];
 }
 
 #pragma mark - <UITableViewDataSource>
