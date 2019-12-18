@@ -51,12 +51,12 @@
     }];
     
     [self.firstTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.leftImageView.mas_right).offset(-10);
+        make.left.mas_equalTo(self.leftImageView.mas_right).offset(10);
         make.centerY.mas_equalTo(self);
     }];
 
     [self.secondTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.firstTitleLabel.mas_right).offset(-20);
+        make.left.mas_equalTo(self.firstTitleLabel.mas_right).offset(20);
         make.centerY.mas_equalTo(self);
         make.right.mas_lessThanOrEqualTo(self.thirdTitleLabel.mas_left).offset(0);
     }];

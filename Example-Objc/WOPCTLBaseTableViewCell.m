@@ -10,6 +10,7 @@
 
 @interface WOPCTLBaseTableViewCell ()
 
+
 @end
 @implementation WOPCTLBaseTableViewCell
 

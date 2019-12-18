@@ -59,19 +59,29 @@
 - (void)p_request {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         WOPCalendarModel *model1 = [[WOPCalendarModel alloc] init];
-        model1.name = @"1111";
-        model1.type = WOPCalendarCellTypeAll;
+        model1.companyName = @"China Southern Airli";
+        model1.airplaneName = @"CZ3102";
+        model1.airplaneNumber = @"Nov.5";
+        model1.departureAdsress = @"Guangzhou";
+        model1.destinationAddress = @"Shanghai";
+        model1.departureTime = @"10:30";
+        model1.departureTime = @"10:30";
+        model1.destinationTime = @"13:00";
+        model1.departureAirport = @"Baiyun Airport T1";
+        model1.destinationAirport = @"Pudong Airport T1";
+        model1.passengers = @[@"Jimmy.Chen",@"Eason.Lia"];
+        model1.type = WOPCalendarCellTypePart;
         
         WOPCalendarModel *model2 = [[WOPCalendarModel alloc] init];
-        model2.name = @"2222";
+        model2.companyName = @"2222";
         model2.type = WOPCalendarCellTypeAll;
 
         WOPCalendarModel *model3 = [[WOPCalendarModel alloc] init];
-        model3.name = @"3333";
-        model3.type = WOPCalendarCellTypePart;
+        model3.companyName = @"3333";
+        model3.type = WOPCalendarCellTypeAll;
 
         WOPCalendarModel *model4 = [[WOPCalendarModel alloc] init];
-        model4.name = @"4444";
+        model4.companyName = @"4444";
         model4.type = WOPCalendarCellTypeAll;
         
 //        [self.events removeAllObjects];
@@ -101,6 +111,7 @@
     if (model.type == WOPCalendarCellTypePart) {
         
         WOPCalendarPartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOPCalendarPartTableViewCell class])];
+        [cell configureWithCalendarModel:model];
         return cell;
     }
     WOPCalendarAllTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOPCalendarAllTableViewCell class])];
@@ -111,7 +122,7 @@
     WOPCalendarModel *model = self.events[indexPath.row];
 //    fetchCellIdentifierWithCalendarType(model);
     if (model.type == WOPCalendarCellTypePart) {
-        return 139;
+        return 159;
     }
     return 226;
 }

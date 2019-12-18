@@ -7,10 +7,12 @@
 //
 
 #import "WOPCTLBaseTableViewCell.h"
-
+#import "WOPCalendarModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WOPCalendarPartTableViewCell : WOPCTLBaseTableViewCell
+
+- (void)configureWithCalendarModel:(WOPCalendarModel*)model;
 
 @end
 

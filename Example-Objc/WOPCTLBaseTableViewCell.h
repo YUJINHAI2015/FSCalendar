@@ -16,8 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface WOPCTLBaseTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) WOPCTLBaseCellHeaderView *headerView;
-@property (nonatomic, strong) UIImageView *tableBackgroundView;
 @property (nonatomic, strong) UIView *bottomContentView;
+
+@property (nonatomic, strong) UIImageView *tableBackgroundView;
 @property (nonatomic, strong) UIView *lineView;
 
 @end
