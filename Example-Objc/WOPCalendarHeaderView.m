@@ -42,13 +42,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.bounds
-                                               byRoundingCorners:(UIRectCornerTopRight | UIRectCornerTopLeft )
-                                                     cornerRadii:CGSizeMake(8, 8)];
-    CAShapeLayer *layer = [[CAShapeLayer alloc] init];
-    layer.frame = self.bounds;
-    layer.path = path.CGPath;
-    self.layer.mask = layer;
+    self.layer.mask = [WOPCTLBaseHelper ctl_addRoundingCorners:(UIRectCornerTopRight | UIRectCornerTopLeft) rect:self.bounds];
 }
 
 - (void)reloadData {

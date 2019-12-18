@@ -8,6 +8,7 @@
 
 #import "WOPCalendarSubViewController.h"
 #import "Masonry.h"
+#import "WOPCalendarPartTableViewCell.h"
 
 @interface WOPCalendarSubViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -27,7 +28,10 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.tableFooterView = [UIView new];
-        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+        _tableView.rowHeight = 139;
+        _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [_tableView registerClass:[WOPCalendarPartTableViewCell class] forCellReuseIdentifier:@"WOPCalendarPartTableViewCell"];
         [self.view addSubview:_tableView];
 
     }
@@ -36,6 +40,10 @@
 - (void)didSelectedDates:(NSArray *)dates {
     self.selectedDates = dates;
     [self.tableView reloadData];
+}
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    self.tableView.frame = self.view.bounds;
 }
 #pragma mark - <UITableViewDataSource>
 
@@ -52,9 +60,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    NSString *text = self.selectedDates[indexPath.row];
-    cell.textLabel.text =text;
+    WOPCalendarPartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WOPCalendarPartTableViewCell"];
+
     return cell;
     
 }
@@ -70,11 +77,4 @@
 //    }
 //
 }
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 20;
-}
-
-
 @end

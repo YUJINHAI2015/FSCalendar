@@ -12,6 +12,7 @@
 #import "Masonry.h"
 #import "FSCalendarCollectionView.h"
 #import "WOPCalendarSubViewController.h"
+#import "WOPCTLBaseHelper.h"
 @interface WOPCalendarViewController ()<FSCalendarDataSource,FSCalendarDelegate,WOPCalendarHeaderViewDelegate,UIGestureRecognizerDelegate>
 {
     void * _KVOContext;
@@ -23,26 +24,25 @@
 @property (strong, nonatomic) WOPCalendarHeaderView *calendarHeaderView;
 @property (strong, nonatomic) WOPCalendarSubViewController *calendarSubViewController;
 
-#define Calendar_Header_BackgroundColor [UIColor colorWithRed:54/255.0 green:106/255.0 blue:234/255.0 alpha:1];
-#define Calendar_Normal_TextColor [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1];
-#define Calendar_Selected_TextColor(x) [UIColor colorWithRed:39/255.0 green:104/255.0 blue:243/255.0 alpha:x];
-#define Calendar_Today_TextColor [UIColor colorWithRed:94/255.0 green:172/255.0 blue:12/255.0 alpha:1];
+#define Calendar_Header_BackgroundColor ctl_color_blue2768f3(1);
+#define Calendar_Normal_TextColor       ctl_color_black333333(1);
+#define Calendar_Selected_TextColor(ap) ctl_color_blue2768f3(ap);
+#define Calendar_Today_TextColor        ctl_color_green5EAC0C(1);
 #define Calendar_ContentView_BackgroundColor [UIColor whiteColor];
 
-#define Calendar_Marge 20
+#define Calendar_Marge ctl_marge
 #define Calendar_Header_Height 66
 #define Calendar_Weekday_Height 44
-#define Calendar_CornerRadius 8
 @end
 
 @implementation WOPCalendarViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self p_initUI];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
+    [self p_initUI];
     // 默认选中今天
     NSString *today = [self.dateFormatter stringFromDate:self.calendar.today];
     [self.calendarSubViewController didSelectedDates:@[today]];
@@ -206,8 +206,6 @@
         self.calendar.calendarHeaderView.hidden = YES;
         self.calendar.headerHeight = Calendar_Header_Height;
         self.calendar.weekdayHeight = Calendar_Weekday_Height;
-        self.calendar.layer.cornerRadius = Calendar_CornerRadius;
-//        self.calendar.layer.masksToBounds = YES;
         
         [self.view bringSubviewToFront:self.calendarHeaderView];
         [self.view addSubview:self.calendarHeaderView];
@@ -223,11 +221,8 @@
         _calendar.backgroundColor = Calendar_ContentView_BackgroundColor;
         _calendar.allowsMultipleSelection = YES;
         _calendar.swipeToChooseGesture.enabled = YES;
-        _calendar.layer.shadowColor = [UIColor lightGrayColor].CGColor;
-        _calendar.layer.shadowOffset = CGSizeMake(5, 5);
-        _calendar.layer.shadowOpacity = 0.3;
-        _calendar.layer.shadowRadius = 3.0;
-        
+        _calendar = (FSCalendar *)[WOPCTLBaseHelper ctl_addShadowForView:_calendar];
+        _calendar = (FSCalendar *)[WOPCTLBaseHelper ctl_addRoundingCorners:_calendar];
         // 星期一
         _calendar.firstWeekday = 2;
         // 每月未显示日期
@@ -243,7 +238,7 @@
         // 星期数字颜色
         _calendar.appearance.weekdayTextColor = Calendar_Normal_TextColor;
         // 星期数字大小
-        _calendar.appearance.weekdayFont = [UIFont fontWithName:@"PingFangSC-Semibold" size:14];
+        _calendar.appearance.weekdayFont = ctl_FontPingFangSC_Semibold(14);
         // 星期大写
         _calendar.appearance.headerDateFormat = @"MMMM";
         // 默认数字颜色
@@ -251,7 +246,7 @@
         // 选中数字颜色
         _calendar.appearance.titleSelectionColor = Calendar_Normal_TextColor;
         // 数字大小
-        _calendar.appearance.titleFont = [UIFont fontWithName:@"PingFangSC-Semibold" size:14];
+        _calendar.appearance.titleFont = ctl_FontPingFangSC_Semibold(14);
         // 选中背景颜色
         _calendar.appearance.selectionColor = Calendar_Selected_TextColor(0.2);
         // 点击今日背景颜色
