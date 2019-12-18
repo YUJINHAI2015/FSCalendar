@@ -26,7 +26,16 @@ typedef NS_ENUM(NSInteger, WOPCalendarCellType) {
 @property (nonatomic, strong) NSString *destinationTime;      // 降落时间
 @property (nonatomic, strong) NSString *departureAirport;     // 起飞port
 @property (nonatomic, strong) NSString *destinationAirport;   // 降落port
-@property (nonatomic, strong) NSArray  *passengers;           // 乘客
+
+
+@property (nonatomic, strong) NSString *hotelName;               // 酒店名称
+@property (nonatomic, strong) NSString *hotelRoomNumber;         // 酒店房间号码
+@property (nonatomic, strong) NSString *hotelAddress;            // 酒店地址
+@property (nonatomic, strong) NSString *hotelFirstDay;           // 酒店入住第一天
+@property (nonatomic, strong) NSString *hotelLastDay;            // 酒店入住最后一天
+@property (nonatomic, strong) NSString *hotelTotalDays;          // 酒店入住总共天数
+@property (nonatomic, strong) NSString *otherMessage;            // 酒店其他信息
+@property (nonatomic, strong) NSArray  *hotelOccupancy;          // 酒店入住人数
 
 
 @property (nonatomic, assign) WOPCalendarCellType type;

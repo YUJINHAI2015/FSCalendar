@@ -35,7 +35,7 @@
 - (void)p_initUI {
     self.lineView.frame = self.bounds;
 
-    if (self.viewStatus == WOPDistanceDotViewStatusVertical) {
+    if (self.viewStatus == WOPDistanceDotViewStatusHorizontal) {
         self.firstDot.frame = CGRectMake((self.frame.size.width - self.dotHeigh) / 2, 0, self.dotHeigh, self.dotHeigh);
         self.secondDot.frame = CGRectMake(0, self.frame.size.height - self.dotHeigh, self.dotHeigh, self.dotHeigh);
     } else {
@@ -67,7 +67,7 @@
     }
     // 线的路径
     UIBezierPath *linePath = [UIBezierPath bezierPath];
-    if (self.viewStatus == WOPDistanceDotViewStatusVertical) {
+    if (self.viewStatus == WOPDistanceDotViewStatusHorizontal) {
         // 起点
         [linePath moveToPoint:CGPointMake(rect.size.width / 2, 0)];
         // 其他点

@@ -69,11 +69,17 @@
         model1.destinationTime = @"13:00";
         model1.departureAirport = @"Baiyun Airport T1";
         model1.destinationAirport = @"Pudong Airport T1";
-        model1.passengers = @[@"Jimmy.Chen",@"Eason.Lia"];
         model1.type = WOPCalendarCellTypePart;
         
         WOPCalendarModel *model2 = [[WOPCalendarModel alloc] init];
-        model2.companyName = @"2222";
+        model2.hotelName = @"All Season Hotel";
+        model2.hotelRoomNumber = @"Nov.5";
+        model2.hotelAddress = @"No. 33 Henan South R";
+        model2.hotelFirstDay = @"11-05";
+        model2.hotelLastDay = @"11-08";
+        model2.hotelTotalDays = @"3";
+        model2.otherMessage = @"Executive Suite 1";
+        model2.hotelOccupancy = @[@"Jimmy.Chen",@"Eason.Lia"];
         model2.type = WOPCalendarCellTypeAll;
 
         WOPCalendarModel *model3 = [[WOPCalendarModel alloc] init];
@@ -112,9 +118,12 @@
         
         WOPCalendarPartTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOPCalendarPartTableViewCell class])];
         [cell configureWithCalendarModel:model];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
     WOPCalendarAllTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WOPCalendarAllTableViewCell class])];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell configureWithCalendarModel:model];
     return cell;
 
 }
@@ -124,7 +133,7 @@
     if (model.type == WOPCalendarCellTypePart) {
         return 159;
     }
-    return 226;
+    return 246;
 }
 #pragma mark - <UITableViewDelegate>
 

@@ -41,15 +41,16 @@
     self.headerView.firstTitleLabel.text = model.companyName;
     self.headerView.secondTitleLabel.text = model.airplaneName;
     self.headerView.thirdTitleLabel.text = model.airplaneNumber;
+    self.headerView.firstTitleLabel.textColor = ctl_color_black333333(0.5);
+    self.headerView.secondTitleLabel.textColor = ctl_color_black333333(1);
+    self.headerView.thirdTitleLabel.textColor = ctl_color_black333333(1);
+
+    
     self.firstBlackLabel.text = [NSString stringWithFormat:@"%@ %@",model.departureTime,model.departureAdsress];
     self.secondBlackLabel.text = [NSString stringWithFormat:@"%@ %@",model.destinationTime,model.destinationAddress];
     self.firstGrayLabel.text = model.departureAirport;
     self.secondGrayLabel.text = model.destinationAirport;
 
-    self.headerView.firstTitleLabel.textColor = ctl_color_black333333(0.5);
-    self.headerView.secondTitleLabel.textColor = ctl_color_black333333(1);
-    self.headerView.thirdTitleLabel.textColor = ctl_color_black333333(1);
-    
     self.firstBlackLabel.textColor = ctl_color_black333333(1);
     self.firstBlackLabel.font = ctl_FontPingFangSC_Semibold(16);
     self.secondBlackLabel.textColor = ctl_color_black333333(1);
@@ -59,6 +60,7 @@
     self.secondGrayLabel.textColor = ctl_color_black333333(0.5);
     self.secondGrayLabel.font = ctl_FontPingFangSC_Regular(16);
     self.dotView.firstDotColor = ctl_color_green5EAC0C(1);
+    self.dotView.viewStatus = WOPDistanceDotViewStatusHorizontal;
 
     [self.firstBlackLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
     [self.firstGrayLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
