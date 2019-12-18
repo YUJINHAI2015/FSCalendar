@@ -1,14 +1,14 @@
 //
-//  WOPCalendarPartTableViewCell.m
+//  WOPCalendarAllTableViewCell.m
 //  FSCalendarExample
 //
 //  Created by yujinhai on 2019/12/18.
 //  Copyright © 2019 wenchaoios. All rights reserved.
 //
 
-#import "WOPCalendarPartTableViewCell.h"
+#import "WOPCalendarAllTableViewCell.h"
 
-@implementation WOPCalendarPartTableViewCell
+@implementation WOPCalendarAllTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -20,10 +20,9 @@
 
     // Configure the view for the selected state
 }
-
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        self.backgroundColor = [UIColor yellowColor];
+        self.backgroundColor = [UIColor greenColor];
     }
     return self;
 }

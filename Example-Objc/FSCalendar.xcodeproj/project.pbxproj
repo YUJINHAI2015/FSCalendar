@@ -11,6 +11,8 @@
 		2401E6FC23A9C875001085FB /* WOPCTLBaseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2401E6FB23A9C875001085FB /* WOPCTLBaseHelper.m */; };
 		2401E70123A9DB7E001085FB /* WOPCTLBaseCellHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2401E70023A9DB7E001085FB /* WOPCTLBaseCellHeaderView.m */; };
 		2401E70623A9FE0B001085FB /* WOPCalendarPartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2401E70523A9FE0B001085FB /* WOPCalendarPartTableViewCell.m */; };
+		2401E70A23AA1581001085FB /* WOPCalendarAllTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2401E70923AA1581001085FB /* WOPCalendarAllTableViewCell.m */; };
+		2401E70E23AA170D001085FB /* WOPCalendarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2401E70D23AA170D001085FB /* WOPCalendarModel.m */; };
 		240FBE6523A1177E00058FB3 /* WOPCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 240FBE6423A1177E00058FB3 /* WOPCalendarViewController.m */; };
 		24B7C42323A1DD970033EC14 /* WOPCalendarHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B7C42223A1DD970033EC14 /* WOPCalendarHeaderView.m */; };
 		24B7C42523A1E3D00033EC14 /* WOPCalendarHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24B7C42423A1E3D00033EC14 /* WOPCalendarHeaderView.xib */; };
@@ -126,6 +128,10 @@
 		2401E70023A9DB7E001085FB /* WOPCTLBaseCellHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOPCTLBaseCellHeaderView.m; sourceTree = "<group>"; };
 		2401E70423A9FE0B001085FB /* WOPCalendarPartTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOPCalendarPartTableViewCell.h; sourceTree = "<group>"; };
 		2401E70523A9FE0B001085FB /* WOPCalendarPartTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOPCalendarPartTableViewCell.m; sourceTree = "<group>"; };
+		2401E70823AA1581001085FB /* WOPCalendarAllTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOPCalendarAllTableViewCell.h; sourceTree = "<group>"; };
+		2401E70923AA1581001085FB /* WOPCalendarAllTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOPCalendarAllTableViewCell.m; sourceTree = "<group>"; };
+		2401E70C23AA170D001085FB /* WOPCalendarModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOPCalendarModel.h; sourceTree = "<group>"; };
+		2401E70D23AA170D001085FB /* WOPCalendarModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOPCalendarModel.m; sourceTree = "<group>"; };
 		240FBE6323A1177E00058FB3 /* WOPCalendarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOPCalendarViewController.h; sourceTree = "<group>"; };
 		240FBE6423A1177E00058FB3 /* WOPCalendarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOPCalendarViewController.m; sourceTree = "<group>"; };
 		24B7C42123A1DD970033EC14 /* WOPCalendarHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOPCalendarHeaderView.h; sourceTree = "<group>"; };
@@ -265,13 +271,25 @@
 				2401E70023A9DB7E001085FB /* WOPCTLBaseCellHeaderView.m */,
 				2401E70423A9FE0B001085FB /* WOPCalendarPartTableViewCell.h */,
 				2401E70523A9FE0B001085FB /* WOPCalendarPartTableViewCell.m */,
+				2401E70823AA1581001085FB /* WOPCalendarAllTableViewCell.h */,
+				2401E70923AA1581001085FB /* WOPCalendarAllTableViewCell.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		2401E70B23AA16FB001085FB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2401E70C23AA170D001085FB /* WOPCalendarModel.h */,
+				2401E70D23AA170D001085FB /* WOPCalendarModel.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		240FBE6223A115A300058FB3 /* WOPCalendar */ = {
 			isa = PBXGroup;
 			children = (
+				2401E70B23AA16FB001085FB /* Model */,
 				2401E6F623A9C67C001085FB /* View */,
 				2401E6F523A9C665001085FB /* CalendarImages */,
 				240FBE6323A1177E00058FB3 /* WOPCalendarViewController.h */,
@@ -724,6 +742,7 @@
 				F971A0C41F2651A7000369FD /* LunarFormatter.m in Sources */,
 				24B7C43A23A25D430033EC14 /* WOPCalendarSubViewController.m in Sources */,
 				EE638CCE1B89DBD80006DD1A /* StoryboardExampleViewController.m in Sources */,
+				2401E70A23AA1581001085FB /* WOPCalendarAllTableViewCell.m in Sources */,
 				EECA10F81BA9C0E400945B83 /* FullScreenExampleViewController.m in Sources */,
 				30DBE3C51DC641AD005A22B7 /* FSCalendarCalculator.m in Sources */,
 				240FBE6523A1177E00058FB3 /* WOPCalendarViewController.m in Sources */,
@@ -733,6 +752,7 @@
 				EE638CD31B89DBE90006DD1A /* AppDelegate.m in Sources */,
 				30A495551DCAD9E6000B2F31 /* FSCalendarWeekdayView.m in Sources */,
 				3092253B1B905C4300123031 /* FSCalendarConstants.m in Sources */,
+				2401E70E23AA170D001085FB /* WOPCalendarModel.m in Sources */,
 				50F2ADE9216D954A00CC481F /* FSCalendarSeparatorDecorationView.m in Sources */,
 				30F4C9101E07C12B00D2EC4D /* FSCalendarDelegationFactory.m in Sources */,
 				2401E70623A9FE0B001085FB /* WOPCalendarPartTableViewCell.m in Sources */,
