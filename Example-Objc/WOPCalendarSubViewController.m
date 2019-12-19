@@ -59,7 +59,7 @@
 - (void)p_request {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         WOPCalendarModel *model1 = [[WOPCalendarModel alloc] init];
-        model1.companyName = @"China Southern Airli";
+        model1.companyName = @"China Southern Airlines";
         model1.airplaneName = @"CZ3102";
         model1.airplaneNumber = @"Nov.5";
         model1.departureAdsress = @"Guangzhou";
@@ -74,7 +74,7 @@
         WOPCalendarModel *model2 = [[WOPCalendarModel alloc] init];
         model2.hotelName = @"All Season Hotel";
         model2.hotelRoomNumber = @"Nov.5";
-        model2.hotelAddress = @"No. 33 Henan South R";
+        model2.hotelAddress = @"Osman is more than amazing very nice and helpful hotel ";
         model2.hotelFirstDay = @"11-05";
         model2.hotelLastDay = @"11-08";
         model2.hotelTotalDays = @"3";

@@ -47,7 +47,15 @@
     self.headerView.firstTitleLabel.textColor = ctl_color_black333333(0.5);
     self.headerView.secondTitleLabel.textColor = ctl_color_black333333(1);
     self.headerView.thirdTitleLabel.textColor = ctl_color_black333333(1);
-
+    self.locationLabel.textColor = ctl_color_blue2768f3(1);
+    self.locationLabel.font = ctl_FontPingFangSC_Semibold(16);
+    self.hotelFirstDayLabel.font = ctl_FontPingFangSC_Semibold(16);
+    self.hotelFinalDayLabel.font = ctl_FontPingFangSC_Semibold(16);
+    self.hotelTotalDayLabel.font = ctl_FontPingFangSC_Semibold(16);
+    self.hotelOtherMessageLabel.font = ctl_FontPingFangSC_Semibold(16);
+    self.hotelOtherMessageLabel.font = ctl_FontPingFangSC_Semibold(16);
+    self.hotelPersionLabel.font = ctl_FontPingFangSC_Semibold(16);
+    
     self.locationLabel.text = model.hotelAddress;
     self.hotelFirstDayLabel.text = model.hotelFirstDay;
     self.dotView.viewStatus = WOPDistanceDotViewStatusVertical;
@@ -110,7 +118,7 @@
 - (UIImageView *)locationImageView {
     if (!_locationImageView) {
         _locationImageView = [[UIImageView alloc] init];
-        _locationImageView.backgroundColor= [UIColor redColor];
+        _locationImageView.backgroundColor= [UIColor blueColor];
         [self.bottomContentView addSubview:_locationImageView];
     }
     return _locationImageView;
@@ -118,7 +126,7 @@
 - (UIImageView *)persionImageView {
     if (!_persionImageView) {
         _persionImageView = [[UIImageView alloc] init];
-        _persionImageView.backgroundColor= [UIColor redColor];
+        _persionImageView.backgroundColor= [UIColor blueColor];
         [self.bottomContentView addSubview:_persionImageView];
     }
     return _persionImageView;
