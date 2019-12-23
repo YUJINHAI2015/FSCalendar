@@ -15,7 +15,7 @@
 #import "DIYExampleViewController.h"
 #import "RangePickerViewController.h"
 #import "WOPCalendarBaseViewController.h"
-#import "WOPCTLHomeViewController.h"
+#import "WOPCTLHomeBaseViewController.h"
 @implementation FSTableViewController
 
 - (void)viewDidLoad
@@ -34,7 +34,7 @@
                              [NSObject class],
                              [NSObject class],
                              [WOPCalendarBaseViewController class],
-                             [WOPCTLHomeViewController class]
+                             [WOPCTLHomeBaseViewController class]
                             ];
     
     self.tableView.rowHeight = [[UIDevice currentDevice].model hasSuffix:@"iPad"] ? 60.0 : 44.0;

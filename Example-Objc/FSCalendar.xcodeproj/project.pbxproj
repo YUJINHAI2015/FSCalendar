@@ -15,7 +15,9 @@
 		2401E70E23AA170D001085FB /* WOPCalendarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2401E70D23AA170D001085FB /* WOPCalendarModel.m */; };
 		2401E71123AA2492001085FB /* WOPDistanceDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2401E71023AA2492001085FB /* WOPDistanceDotView.m */; };
 		240FBE6523A1177E00058FB3 /* WOPCalendarBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 240FBE6423A1177E00058FB3 /* WOPCalendarBaseViewController.m */; };
-		24A2F3BE23B054DD00F745FB /* WOPCTLHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A2F3BD23B054DD00F745FB /* WOPCTLHomeViewController.m */; };
+		24A2F3C223B05B4400F745FB /* WOPCTLHomeSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A2F3C123B05B4400F745FB /* WOPCTLHomeSubViewController.m */; };
+		24A2F3C823B05BAF00F745FB /* WOPCTLHomeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A2F3C723B05BAF00F745FB /* WOPCTLHomeHeaderView.m */; };
+		24A2F3CA23B05C6A00F745FB /* WOPCTLHomeBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A2F3C923B05C6A00F745FB /* WOPCTLHomeBaseViewController.m */; };
 		24B7C42323A1DD970033EC14 /* WOPCalendarHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B7C42223A1DD970033EC14 /* WOPCalendarHeaderView.m */; };
 		24B7C42523A1E3D00033EC14 /* WOPCalendarHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24B7C42423A1E3D00033EC14 /* WOPCalendarHeaderView.xib */; };
 		24B7C42F23A25C760033EC14 /* wop_calendar_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24B7C42623A25C760033EC14 /* wop_calendar_right@2x.png */; };
@@ -138,8 +140,12 @@
 		2401E71023AA2492001085FB /* WOPDistanceDotView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOPDistanceDotView.m; sourceTree = "<group>"; };
 		240FBE6323A1177E00058FB3 /* WOPCalendarBaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOPCalendarBaseViewController.h; sourceTree = "<group>"; };
 		240FBE6423A1177E00058FB3 /* WOPCalendarBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOPCalendarBaseViewController.m; sourceTree = "<group>"; };
-		24A2F3BC23B054DD00F745FB /* WOPCTLHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOPCTLHomeViewController.h; sourceTree = "<group>"; };
-		24A2F3BD23B054DD00F745FB /* WOPCTLHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOPCTLHomeViewController.m; sourceTree = "<group>"; };
+		24A2F3BC23B054DD00F745FB /* WOPCTLHomeBaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOPCTLHomeBaseViewController.h; sourceTree = "<group>"; };
+		24A2F3C023B05B4400F745FB /* WOPCTLHomeSubViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOPCTLHomeSubViewController.h; sourceTree = "<group>"; };
+		24A2F3C123B05B4400F745FB /* WOPCTLHomeSubViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOPCTLHomeSubViewController.m; sourceTree = "<group>"; };
+		24A2F3C623B05BAF00F745FB /* WOPCTLHomeHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOPCTLHomeHeaderView.h; sourceTree = "<group>"; };
+		24A2F3C723B05BAF00F745FB /* WOPCTLHomeHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOPCTLHomeHeaderView.m; sourceTree = "<group>"; };
+		24A2F3C923B05C6A00F745FB /* WOPCTLHomeBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WOPCTLHomeBaseViewController.m; sourceTree = "<group>"; };
 		24B7C42123A1DD970033EC14 /* WOPCalendarHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOPCalendarHeaderView.h; sourceTree = "<group>"; };
 		24B7C42223A1DD970033EC14 /* WOPCalendarHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOPCalendarHeaderView.m; sourceTree = "<group>"; };
 		24B7C42423A1E3D00033EC14 /* WOPCalendarHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WOPCalendarHeaderView.xib; sourceTree = "<group>"; };
@@ -294,13 +300,10 @@
 		240FBE6223A115A300058FB3 /* WOPCalendar */ = {
 			isa = PBXGroup;
 			children = (
+				24A2F3C323B05B5600F745FB /* ViewController */,
 				2401E6F523A9C665001085FB /* CalendarImages */,
 				2401E70B23AA16FB001085FB /* Model */,
 				2401E6F623A9C67C001085FB /* View */,
-				240FBE6323A1177E00058FB3 /* WOPCalendarBaseViewController.h */,
-				240FBE6423A1177E00058FB3 /* WOPCalendarBaseViewController.m */,
-				24B7C43823A25D430033EC14 /* WOPCalendarSubViewController.h */,
-				24B7C43923A25D430033EC14 /* WOPCalendarSubViewController.m */,
 			);
 			name = WOPCalendar;
 			sourceTree = "<group>";
@@ -308,8 +311,8 @@
 		24A2F3BB23B053F000F745FB /* WOPCTLHome */ = {
 			isa = PBXGroup;
 			children = (
-				24A2F3BC23B054DD00F745FB /* WOPCTLHomeViewController.h */,
-				24A2F3BD23B054DD00F745FB /* WOPCTLHomeViewController.m */,
+				24A2F3C523B05B7900F745FB /* View */,
+				24A2F3C423B05B6900F745FB /* ViewController */,
 			);
 			name = WOPCTLHome;
 			sourceTree = "<group>";
@@ -327,6 +330,37 @@
 				2401E71023AA2492001085FB /* WOPDistanceDotView.m */,
 			);
 			name = WOPCTLBase;
+			sourceTree = "<group>";
+		};
+		24A2F3C323B05B5600F745FB /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				240FBE6323A1177E00058FB3 /* WOPCalendarBaseViewController.h */,
+				240FBE6423A1177E00058FB3 /* WOPCalendarBaseViewController.m */,
+				24B7C43823A25D430033EC14 /* WOPCalendarSubViewController.h */,
+				24B7C43923A25D430033EC14 /* WOPCalendarSubViewController.m */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		24A2F3C423B05B6900F745FB /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				24A2F3BC23B054DD00F745FB /* WOPCTLHomeBaseViewController.h */,
+				24A2F3C923B05C6A00F745FB /* WOPCTLHomeBaseViewController.m */,
+				24A2F3C023B05B4400F745FB /* WOPCTLHomeSubViewController.h */,
+				24A2F3C123B05B4400F745FB /* WOPCTLHomeSubViewController.m */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		24A2F3C523B05B7900F745FB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				24A2F3C623B05BAF00F745FB /* WOPCTLHomeHeaderView.h */,
+				24A2F3C723B05BAF00F745FB /* WOPCTLHomeHeaderView.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		30024F921BD1013D00B1C04C /* Delegate Appearance */ = {
@@ -784,9 +818,9 @@
 				30F4C9101E07C12B00D2EC4D /* FSCalendarDelegationFactory.m in Sources */,
 				2401E70623A9FE0B001085FB /* WOPCalendarPartTableViewCell.m in Sources */,
 				309539901C38D66C00BD37AA /* FSCalendarCollectionViewLayout.m in Sources */,
+				24A2F3C223B05B4400F745FB /* WOPCTLHomeSubViewController.m in Sources */,
 				2401E6F923A9C77B001085FB /* WOPCTLBaseTableViewCell.m in Sources */,
 				30FCB3971BAAD112002B87AD /* FSCalendarStickyHeader.m in Sources */,
-				24A2F3BE23B054DD00F745FB /* WOPCTLHomeViewController.m in Sources */,
 				30B0BAD21B8D8E23004B9476 /* FSCalendarCell.m in Sources */,
 				EE638CD41B89DBE90006DD1A /* FSTableViewController.m in Sources */,
 				302811471DCA296400F8CED2 /* DIYCalendarCell.m in Sources */,
@@ -797,7 +831,9 @@
 				EEC9C03A1BDC9E7000383A07 /* FSCalendarCollectionView.m in Sources */,
 				2401E6FC23A9C875001085FB /* WOPCTLBaseHelper.m in Sources */,
 				301F79CC1DFD39E700D8631E /* FSCalendarDelegationProxy.m in Sources */,
+				24A2F3CA23B05C6A00F745FB /* WOPCTLHomeBaseViewController.m in Sources */,
 				F988B1C81EA6046700609E59 /* RangePickerViewController.m in Sources */,
+				24A2F3C823B05BAF00F745FB /* WOPCTLHomeHeaderView.m in Sources */,
 				30D55B101C90240000BB43D5 /* HidePlaceholderViewController.m in Sources */,
 				3055B1C31DA9323A002AFA13 /* FSCalendarExtensions.m in Sources */,
 				3031F3EF1CDEDFC500C174D7 /* DIYExampleViewController.m in Sources */,

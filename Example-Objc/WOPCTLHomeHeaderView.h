@@ -1,5 +1,5 @@
 //
-//  WOPCTLHomeViewController.h
+//  WOPCTLHomeHeaderView.h
 //  FSCalendarExample
 //
 //  Created by yujinhai on 2019/12/23.
@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WOPCTLBaseHelper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WOPCTLHomeViewController : UIViewController
+@interface WOPCTLHomeHeaderView : UIView
 
 @end
 

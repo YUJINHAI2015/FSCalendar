@@ -523,6 +523,7 @@
                     <connections>
                         <outlet property="calendar" destination="i44-Ll-ELi" id="rjY-a3-mAd"/>
                         <outlet property="calendarHeightConstraint" destination="AsQ-eP-ia8" id="hLD-9b-Xyh"/>
+                        <outlet property="height" destination="AsQ-eP-ia8" id="kUo-ec-z0A"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

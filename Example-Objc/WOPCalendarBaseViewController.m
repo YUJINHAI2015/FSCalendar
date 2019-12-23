@@ -97,8 +97,14 @@
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
     BOOL shouldBegin = _calendarSubViewController.tableView.contentOffset.y <= -_calendarSubViewController.tableView.contentInset.top;
+    
+    NSLog(@"offset %f",_calendarSubViewController.tableView.contentOffset.y);
+    NSLog(@"insert %f",_calendarSubViewController.tableView.contentInset.top);
+
     if (shouldBegin) {
         CGPoint velocity = [self.scopeGesture velocityInView:self.view];
+        NSLog(@"velocity %f",velocity.y);
+
         switch (self.calendar.scope) {
             case FSCalendarScopeMonth:
                 return velocity.y < 0;
