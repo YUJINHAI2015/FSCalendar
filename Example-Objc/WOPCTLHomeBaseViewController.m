@@ -10,12 +10,16 @@
 #import "WOPCTLHomeHeaderView.h"
 #import "WOPCTLHomeSubViewController.h"
 #import "Masonry.h"
+#import "WOPCTLHomeNavigationView.h"
 
 @interface WOPCTLHomeBaseViewController ()<UIGestureRecognizerDelegate>
 @property (strong, nonatomic) WOPCTLHomeHeaderView *homeHeaderView;
 @property (strong, nonatomic) WOPCTLHomeSubViewController *homeSubViewController;
 @property (strong, nonatomic) UIPanGestureRecognizer *gesture;
 @property (assign, nonatomic) BOOL homeViewToTop;
+@property (strong, nonatomic) WOPCTLHomeNavigationView *navigationView;
+
+@property (strong, nonatomic) UIScrollView *tripScrollView;
 
 @end
 
@@ -28,7 +32,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
 
     [self p_initUI];
-
+    self.tripScrollView.backgroundColor = [UIColor whiteColor];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -51,6 +55,18 @@
         make.leading.mas_equalTo(self.view.mas_leading);
         make.trailing.mas_equalTo(self.view.mas_trailing);
     }];
+    [self.navigationView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(84);
+        make.top.mas_equalTo(self.view);
+        make.leading.mas_equalTo(self.view);
+        make.trailing.mas_equalTo(self.view);
+    }];
+    [self.tripScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.leading.mas_equalTo(self.homeHeaderView.mas_leading);
+        make.trailing.mas_equalTo(self.homeHeaderView.mas_trailing);
+        make.top.mas_equalTo(self.navigationView.mas_bottom).offset(24);
+        make.bottom.mas_equalTo(self.homeHeaderView.mas_bottom).offset(-20);
+    }];
 }
 #pragma mark - Target actions
 
@@ -70,7 +86,7 @@
 
             } else {
                 [self.homeSubViewController.view mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    make.top.mas_equalTo(self.view).offset(88);
+                    make.top.mas_equalTo(self.tripScrollView.mas_top).offset(0);
                     make.bottom.mas_equalTo(self.view.mas_bottom);
                     make.leading.mas_equalTo(self.view.mas_leading);
                     make.trailing.mas_equalTo(self.view.mas_trailing);
@@ -104,23 +120,22 @@
 // Whether scope gesture should begin
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
+    CGPoint location = [self.gesture locationInView:self.homeSubViewController.tableView];
     
-    BOOL shouldBegin = _homeSubViewController.tableView.contentOffset.y <= -_homeSubViewController.tableView.contentInset.top;
-    
-    NSLog(@"offset %f",_homeSubViewController.tableView.contentOffset.y);
-    NSLog(@"insert %f",_homeSubViewController.tableView.contentInset.top);
-    
-    if (shouldBegin) {
-        CGPoint velocity = [self.gesture velocityInView:self.view];
-        NSLog(@"velocity %f",velocity.y);
-        if (self.homeViewToTop) {
-            return velocity.y > 0;
-        } else {
-            return velocity.y < 0;
+    if (CGRectContainsPoint(self.homeSubViewController.tableView.frame, location)) {
+        BOOL shouldBegin = _homeSubViewController.tableView.contentOffset.y <= -_homeSubViewController.tableView.contentInset.top;
+        
+        if (shouldBegin) {
+            CGPoint velocity = [self.gesture velocityInView:self.view];
+            if (self.homeViewToTop) {
+                return velocity.y > 0;
+            } else {
+                return velocity.y < 0;
+            }
         }
+        return shouldBegin;
     }
-    return shouldBegin;
-
+    return NO;
 }
 
 
@@ -154,5 +169,19 @@
         _homeSubViewController.view.backgroundColor = [UIColor yellowColor];
     }
     return _homeSubViewController;
+}
+- (WOPCTLHomeNavigationView *)navigationView {
+    if (!_navigationView) {
+        _navigationView = [[WOPCTLHomeNavigationView alloc] init];
+        [self.view addSubview:_navigationView];
+    }
+    return _navigationView;
+}
+- (UIScrollView *)tripScrollView {
+    if (!_tripScrollView) {
+        _tripScrollView = [[UIScrollView alloc] init];
+        [self.homeHeaderView addSubview:_tripScrollView];
+    }
+    return _tripScrollView;
 }
 @end
