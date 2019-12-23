@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define ctl_color_blue2768f3(a) [UIColor colorWithRed:54/255.0 green:106/255.0 blue:234/255.0 alpha:a];
 #define ctl_color_green5EAC0C(a) [UIColor colorWithRed:94/255.0 green:172/255.0 blue:12/255.0 alpha:a];
 #define ctl_color_grayd8d8d8(a) [UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:a];
+#define ctl_color_grayf9f9f9(a) [UIColor colorWithRed:246/255.0 green:247/255.0 blue:249/255.0 alpha:a];
 
 #define ctl_marge 20
 // 字体

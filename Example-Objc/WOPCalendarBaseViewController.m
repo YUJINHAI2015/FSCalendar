@@ -40,8 +40,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    
+    self.view.backgroundColor = ctl_color_grayf9f9f9(1);
+
     [self p_initUI];
     // 默认选中今天
     NSString *today = [self.dateFormatter stringFromDate:self.calendar.today];
