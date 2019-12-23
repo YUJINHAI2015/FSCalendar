@@ -1,5 +1,5 @@
 //
-//  WOPCalendarViewController.h
+//  WOPCalendarBaseViewController.h
 //  FSCalendarExample
 //
 //  Created by yujinhai on 2019/12/11.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WOPCalendarViewController : UIViewController
+@interface WOPCalendarBaseViewController : UIViewController
 
 @end
 
