@@ -121,6 +121,7 @@
             CGFloat height = FSCalendarStandardRowHeight;
             if (!self.calendar.floatingMode) {
                 switch (self.calendar.transitionCoordinator.representingScope) {
+                        // 给定6行
                     case FSCalendarScopeMonth: {
                         height = (self.collectionView.fs_height-self.sectionInsets.top-self.sectionInsets.bottom)/6.0;
                         break;

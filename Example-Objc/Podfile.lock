@@ -1,16 +1,26 @@
 PODS:
+  - HTGKScrollViewKit (0.7.0):
+    - SnapKit (~> 4.2.0)
   - Masonry (1.1.0)
+  - SnapKit (4.2.0)
 
 DEPENDENCIES:
+  - HTGKScrollViewKit (~> 0.7.0)
   - Masonry (= 1.1.0)
 
 SPEC REPOS:
+  https://gitee.com/foreverht/MyPrivatePods.git:
+    - HTGKScrollViewKit
+  https://github.com/CocoaPods/Specs.git:
+    - SnapKit
   trunk:
     - Masonry
 
 SPEC CHECKSUMS:
+  HTGKScrollViewKit: 5825a41945e0a7f22c117377af35459f088eb856
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
-PODFILE CHECKSUM: ef93253b9931d3cd0a5ddd34197292c9db4eb05b
+PODFILE CHECKSUM: a9b57d4f3194c4b1e6c93af03ed20ecd6f4dc008
 
 COCOAPODS: 1.8.4

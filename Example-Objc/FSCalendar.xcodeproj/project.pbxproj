@@ -31,6 +31,7 @@
 		24B7C43623A25C760033EC14 /* wop_calendar_right@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24B7C42D23A25C760033EC14 /* wop_calendar_right@3x.png */; };
 		24B7C43723A25C760033EC14 /* wop_calendar_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24B7C42E23A25C760033EC14 /* wop_calendar_left@2x.png */; };
 		24B7C43A23A25D430033EC14 /* WOPCalendarSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B7C43923A25D430033EC14 /* WOPCalendarSubViewController.m */; };
+		24FDD55824B354F400AB667D /* WOPCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24FDD55724B354F400AB667D /* WOPCalendarViewController.m */; };
 		30024F951BD1015300B1C04C /* DelegateAppearanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30024F941BD1015300B1C04C /* DelegateAppearanceViewController.m */; };
 		301F79CB1DFD39E700D8631E /* FSCalendarDelegationProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 301F79C91DFD39E700D8631E /* FSCalendarDelegationProxy.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		301F79CC1DFD39E700D8631E /* FSCalendarDelegationProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 301F79CA1DFD39E700D8631E /* FSCalendarDelegationProxy.m */; };
@@ -163,6 +164,8 @@
 		24B7C42E23A25C760033EC14 /* wop_calendar_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wop_calendar_left@2x.png"; sourceTree = "<group>"; };
 		24B7C43823A25D430033EC14 /* WOPCalendarSubViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOPCalendarSubViewController.h; sourceTree = "<group>"; };
 		24B7C43923A25D430033EC14 /* WOPCalendarSubViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOPCalendarSubViewController.m; sourceTree = "<group>"; };
+		24FDD55624B354F400AB667D /* WOPCalendarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WOPCalendarViewController.h; sourceTree = "<group>"; };
+		24FDD55724B354F400AB667D /* WOPCalendarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WOPCalendarViewController.m; sourceTree = "<group>"; };
 		30024F931BD1015300B1C04C /* DelegateAppearanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DelegateAppearanceViewController.h; sourceTree = SOURCE_ROOT; };
 		30024F941BD1015300B1C04C /* DelegateAppearanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DelegateAppearanceViewController.m; sourceTree = SOURCE_ROOT; };
 		301F79C91DFD39E700D8631E /* FSCalendarDelegationProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarDelegationProxy.h; sourceTree = "<group>"; };
@@ -368,6 +371,15 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		24FDD55524B3547C00AB667D /* WOPOtherCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				24FDD55624B354F400AB667D /* WOPCalendarViewController.h */,
+				24FDD55724B354F400AB667D /* WOPCalendarViewController.m */,
+			);
+			name = WOPOtherCalendar;
+			sourceTree = "<group>";
+		};
 		30024F921BD1013D00B1C04C /* Delegate Appearance */ = {
 			isa = PBXGroup;
 			children = (
@@ -496,6 +508,7 @@
 		EE0D7FC91B89C5D3003C287B /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				24FDD55524B3547C00AB667D /* WOPOtherCalendar */,
 				24A2F3BF23B0561A00F745FB /* WOPCTLBase */,
 				24A2F3BB23B053F000F745FB /* WOPCTLHome */,
 				240FBE6223A115A300058FB3 /* WOPCalendar */,
@@ -694,8 +707,8 @@
 				TargetAttributes = {
 					EE0D7FC61B89C5D3003C287B = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 2CTCE2SR5J;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = M6BGSUZ2F4;
+						ProvisioningStyle = Automatic;
 					};
 					EE638CE11B8A1F550006DD1A = {
 						CreatedOnToolsVersion = 6.4;
@@ -832,6 +845,7 @@
 				2401E6F923A9C77B001085FB /* WOPCTLBaseTableViewCell.m in Sources */,
 				30FCB3971BAAD112002B87AD /* FSCalendarStickyHeader.m in Sources */,
 				30B0BAD21B8D8E23004B9476 /* FSCalendarCell.m in Sources */,
+				24FDD55824B354F400AB667D /* WOPCalendarViewController.m in Sources */,
 				EE638CD41B89DBE90006DD1A /* FSTableViewController.m in Sources */,
 				302811471DCA296400F8CED2 /* DIYCalendarCell.m in Sources */,
 				308B58D81CC08FFA004E812D /* ButtonsViewController.m in Sources */,
@@ -1007,15 +1021,16 @@
 			baseConfigurationReference = B12734ED8A89DAFD9755B514 /* Pods-FSCalendarExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 2CTCE2SR5J;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M6BGSUZ2F4;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wenchaod.FSCalendarExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kwgproperty.HeJingBigMemberYiHe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = ALL;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1025,15 +1040,16 @@
 			baseConfigurationReference = 31D3048D439FB2BB3AF5A115 /* Pods-FSCalendarExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 2CTCE2SR5J;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M6BGSUZ2F4;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wenchaod.FSCalendarExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kwgproperty.HeJingBigMemberYiHe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = ALL;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

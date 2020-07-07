@@ -8,12 +8,14 @@
 
 #import "WOPCalendarBaseViewController.h"
 #import "FSCalendar.h"
-#import "WOPCalendarHeaderView.h"
 #import "Masonry.h"
 #import "FSCalendarCollectionView.h"
 #import "WOPCalendarSubViewController.h"
 #import "WOPCTLBaseHelper.h"
-@interface WOPCalendarBaseViewController ()<FSCalendarDataSource,FSCalendarDelegate,WOPCalendarHeaderViewDelegate,UIGestureRecognizerDelegate>
+#import "LunarFormatter.h"
+
+
+@interface WOPCalendarBaseViewController ()<FSCalendarDataSource,FSCalendarDelegate,UIGestureRecognizerDelegate>
 {
     void * _KVOContext;
 }
@@ -21,8 +23,8 @@
 @property (strong, nonatomic) FSCalendar *calendar;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 @property (strong, nonatomic) UIPanGestureRecognizer *scopeGesture;
-@property (strong, nonatomic) WOPCalendarHeaderView *calendarHeaderView;
 @property (strong, nonatomic) WOPCalendarSubViewController *calendarSubViewController;
+@property (strong, nonatomic) LunarFormatter *lunarFormatter;
 
 #define Calendar_Header_BackgroundColor ctl_color_blue2768f3(1);
 #define Calendar_Normal_TextColor       ctl_color_black333333(1);
@@ -42,10 +44,18 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = ctl_color_grayf9f9f9(1);
 
+    __weak typeof(self) weakSelf = self;
+
     [self p_initUI];
     // 默认选中今天
     NSString *today = [self.dateFormatter stringFromDate:self.calendar.today];
     [self.calendarSubViewController didSelectedDates:@[today]];
+
+    _lunarFormatter = [[LunarFormatter alloc] init];
+    
+    [self.lunarFormatter loadCalendarEventsWithStartDate:self.calendar.minimumDate endDate:self.calendar.maximumDate completed:^{
+        [weakSelf.calendar reloadData];
+    }];
 
 }
 - (void)p_initUI {
@@ -57,12 +67,7 @@
         make.leading.mas_equalTo(self.view.mas_leading).offset(Calendar_Marge);
         make.trailing.mas_equalTo(self.view.mas_trailing).offset(-Calendar_Marge);
     }];
-    [self.calendarHeaderView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(Calendar_Header_Height);
-        make.top.mas_equalTo(self.calendar);
-        make.leading.mas_equalTo(self.calendar);
-        make.trailing.mas_equalTo(self.calendar);
-    }];
+
     [self.calendarSubViewController.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.calendar.mas_bottom).offset(Calendar_Marge);
         make.bottom.mas_equalTo(self.view.mas_bottom);
@@ -114,6 +119,32 @@
     }
     return shouldBegin;
 }
+#pragma mark - FSCalendarDataSource
+
+- (NSDate *)minimumDateForCalendar:(FSCalendar *)calendar
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd";
+    
+    NSDate *minimumDate = [self.dateFormatter dateFromString:@"2020-01-01"];
+
+    return minimumDate;
+}
+
+- (NSDate *)maximumDateForCalendar:(FSCalendar *)calendar
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy-MM-dd";
+    
+    NSDate *maximumDate = [self.dateFormatter dateFromString:@"2200-01-01"];
+
+    return maximumDate;
+}
+
+- (NSString *)calendar:(FSCalendar *)calendar subtitleForDate:(NSDate *)date
+{
+    return [self.lunarFormatter stringFromDate:date];
+}
 
 #pragma mark - <FSCalendarDelegate>
     
@@ -143,7 +174,7 @@
 - (void)calendarCurrentPageDidChange:(FSCalendar *)calendar
 {
     NSLog(@"%s %@", __FUNCTION__, [self.dateFormatter stringFromDate:calendar.currentPage]);
-    [self.calendarHeaderView reloadData];
+
 }
 - (void)calendar:(FSCalendar *)calendar willDisplayCell:(FSCalendarCell *)cell forDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition {
 
@@ -163,19 +194,11 @@
 - (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleSelectionColorForDate:(NSDate *)date {
     
     if ([[self.dateFormatter stringFromDate:date] isEqualToString:[self.dateFormatter stringFromDate:[NSDate date]]]) {
-        [self.calendarHeaderView reloadData];
+
         return Calendar_Today_TextColor;
     } else {
         return Calendar_Normal_TextColor;
     }
-}
-#pragma mark - WOPCalendarHeaderViewDelegate
-- (void)calendarHeaderView:(FSCalendarHeaderView *)headerView didSelect:(FSCalendar *)currentCalendar monthStatus:(WOPCalendarHeaderViewMonthStatus)monthStatus {
-    NSInteger value = monthStatus == WOPCalendarHeaderViewMonthLast ? -1 : 1;
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDate *currentMonth = self.calendar.currentPage;
-    NSDate *month = [gregorian dateByAddingUnit:NSCalendarUnitMonth value:value toDate:currentMonth options:0];
-    [self.calendar setCurrentPage:month animated:YES];
 }
 #pragma mark - setter/getter
 - (WOPCalendarSubViewController *)calendarSubViewController {
@@ -199,25 +222,6 @@
     }
     return _scopeGesture;
 }
-- (WOPCalendarHeaderView *)calendarHeaderView {
-    if (!_calendarHeaderView) {
-        WOPCalendarHeaderView *headerView = [[WOPCalendarHeaderView alloc] initWithFrame:CGRectZero];
-        headerView.backgroundColor = Calendar_Header_BackgroundColor;
-        headerView.calendar = self.calendar;
-        headerView.scrollEnabled = YES;
-        headerView.delegate = self;
-        _calendarHeaderView = headerView;
-        // 隐藏默认的头部
-        self.calendar.calendarHeaderView.collectionView.hidden = YES;
-        self.calendar.calendarHeaderView.hidden = YES;
-        self.calendar.headerHeight = Calendar_Header_Height;
-        self.calendar.weekdayHeight = Calendar_Weekday_Height;
-        
-        [self.view bringSubviewToFront:self.calendarHeaderView];
-        [self.view addSubview:self.calendarHeaderView];
-    }
-    return _calendarHeaderView;
-}
 - (FSCalendar *)calendar {
     if (!_calendar) {
         _calendar = [[FSCalendar alloc] initWithFrame:CGRectZero];
@@ -227,10 +231,12 @@
         _calendar.backgroundColor = Calendar_ContentView_BackgroundColor;
         _calendar.allowsMultipleSelection = YES;
         _calendar.swipeToChooseGesture.enabled = YES;
-        _calendar = (FSCalendar *)[WOPCTLBaseHelper ctl_addShadowForView:_calendar];
-        _calendar = (FSCalendar *)[WOPCTLBaseHelper ctl_addRoundingCorners:_calendar];
+//        _calendar = (FSCalendar *)[WOPCTLBaseHelper ctl_addShadowForView:_calendar];
+//        _calendar = (FSCalendar *)[WOPCTLBaseHelper ctl_addRoundingCorners:_calendar];
         // 星期一
-        _calendar.firstWeekday = 2;
+        _calendar.firstWeekday = 1;
+//        _calendar.calendarHeaderView.hidden = YES;
+        
         // 每月未显示日期
         _calendar.placeholderType = FSCalendarPlaceholderTypeFillHeadTail;
         // 星期缩写

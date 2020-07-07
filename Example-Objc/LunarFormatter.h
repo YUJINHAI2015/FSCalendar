@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)stringFromDate:(NSDate *)date;
 
+- (void)loadCalendarEventsWithStartDate:(NSDate *)startDate
+                                endDate:(NSDate *)endDate
+                              completed:(void (^)(void))completed;
 @end
 
 NS_ASSUME_NONNULL_END

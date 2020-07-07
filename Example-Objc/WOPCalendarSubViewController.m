@@ -49,7 +49,7 @@
     return _tableView;
 }
 - (void)didSelectedDates:(NSArray *)dates {
-    [self p_request];
+//    [self p_request];
 }
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];

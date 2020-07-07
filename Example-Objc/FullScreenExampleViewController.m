@@ -259,6 +259,24 @@ NS_ASSUME_NONNULL_END
             [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
             [self presentViewController:alertController animated:YES completion:nil];
         }
+        
+        
+        
+        EKEventStore* eventStore = [[EKEventStore alloc] init];
+        // 60*60*24 * 365
+        NSDate* ssdate = [NSDate dateWithTimeIntervalSinceNow:-60*60*24 * 365];//事件段，开始时间
+        NSDate* ssend = [NSDate dateWithTimeIntervalSinceNow:60*60*24 * 365];//结束时间，取中间
+        NSPredicate* predicate = [eventStore predicateForEventsWithStartDate:ssdate
+                                                                     endDate:ssend
+                                                                   calendars:nil];//谓语获取，一种搜索方法
+        NSArray* events = [eventStore eventsMatchingPredicate:predicate];//数组里面就是时间段中的EKEvent事件数组
+
+        for (EKEvent *event in events) {
+            NSLog(@"=================================================================");
+            NSLog(@"%@", event.title);
+            NSLog(@"%@", event.startDate);
+            NSLog(@"=================================================================");
+        }
     }];
     
 }
