@@ -126,7 +126,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"yyyy-MM-dd";
     
-    NSDate *minimumDate = [self.dateFormatter dateFromString:@"2000-01-01"];
+    NSDate *minimumDate = [self.dateFormatter dateFromString:@"2020-01-01"];
 
     return minimumDate;
 }
@@ -136,7 +136,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"yyyy-MM-dd";
     
-    NSDate *maximumDate = [self.dateFormatter dateFromString:@"2200-01-01"];
+    NSDate *maximumDate = [self.dateFormatter dateFromString:@"2020-03-01"];
 
     return maximumDate;
 }
@@ -247,7 +247,9 @@
         _calendar.firstWeekday = 1;
         _calendar.calendarHeaderView.hidden = YES;
         _calendar.headerHeight = 0;
-        
+        _calendar.scrollDirection = FSCalendarScrollDirectionVertical;
+        _calendar.rowHeight = 40;
+        _calendar.weekdayHeight = 20;
         // 每月未显示日期
         _calendar.placeholderType = FSCalendarPlaceholderTypeFillSixRows;
         // 星期缩写

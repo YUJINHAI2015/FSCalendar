@@ -308,16 +308,16 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
         if (!self.floatingMode) {
             switch (self.transitionCoordinator.representingScope) {
                 case FSCalendarScopeMonth: {
-                    CGFloat contentHeight = rowHeight*6 + padding*2;
+                    CGFloat contentHeight = rowHeight*4 + padding*2;
                     _daysContainer.frame = CGRectMake(0, headerHeight+weekdayHeight, self.fs_width, contentHeight);
                     _collectionView.frame = CGRectMake(0, 0, _daysContainer.fs_width, contentHeight);
-                    break;
+                    break; // 20+230  55 * 4 + 10 = 230
                 }
                 case FSCalendarScopeWeek: {
-                    CGFloat contentHeight = rowHeight + padding*2;
+                    CGFloat contentHeight = headerHeight + 2 * rowHeight + padding*2;
                     _daysContainer.frame = CGRectMake(0, headerHeight+weekdayHeight, self.fs_width, contentHeight);
                     _collectionView.frame = CGRectMake(0, 0, _daysContainer.fs_width, contentHeight);
-                    break;
+                    break; // 20 + (55 * 2 + 10)
                 }
             }
         } else {
@@ -358,12 +358,12 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
     if (!self.floatingMode) {
         switch (scope) {
             case FSCalendarScopeMonth: {
-                CGFloat height = weekdayHeight + headerHeight + [self.calculator numberOfRowsInMonth:_currentPage]*rowHeight + paddings;
+                CGFloat height = weekdayHeight + headerHeight + 4 * rowHeight + paddings;
                 return CGSizeMake(size.width, height);
             }
             case FSCalendarScopeWeek: {
-                CGFloat height = weekdayHeight + headerHeight + rowHeight + paddings;
-                return CGSizeMake(size.width, height);
+                CGFloat height = weekdayHeight + headerHeight + 2 * rowHeight + paddings;
+                return CGSizeMake(size.width, height); // 135
             }
         }
     } else {
@@ -377,7 +377,7 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     [self requestBoundingDatesIfNecessary];
-    return self.calculator.numberOfSections;
+    return self.calculator.numberOfSections; // 返回月份
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -386,15 +386,15 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
         NSInteger numberOfRows = [self.calculator numberOfRowsInSection:section];
         return numberOfRows * 7;
     }
-    switch (self.transitionCoordinator.representingScope) {
+    switch (self.transitionCoordinator.representingScope) { // 返回每月多少天
         case FSCalendarScopeMonth: {
-            return 42;
+            return 28;
         }
         case FSCalendarScopeWeek: {
-            return 7;
+            return 14;
         }
     }
-    return 7;
+    return 14;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -421,7 +421,7 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
         }
     }
     
-    NSDate *date = [self.calculator dateForIndexPath:indexPath];
+    NSDate *date = [self.calculator dateForIndexPath:indexPath]; // 返回每天，月份、星期
     FSCalendarCell *cell = [self.dataSourceProxy calendar:self cellForDate:date atMonthPosition:monthPosition];
     if (!cell) {
         cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:FSCalendarDefaultCellReuseIdentifier forIndexPath:indexPath];
@@ -919,14 +919,14 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
 }
 
 - (CGFloat)preferredRowHeight
-{
+{   // 每一个cell的高度
     if (_preferredRowHeight == FSCalendarAutomaticDimension) {
         CGFloat headerHeight = self.preferredHeaderHeight;
         CGFloat weekdayHeight = self.preferredWeekdayHeight;
         CGFloat contentHeight = self.transitionCoordinator.cachedMonthSize.height-headerHeight-weekdayHeight;
         CGFloat padding = 5;
         if (!self.floatingMode) {
-            _preferredRowHeight = (contentHeight-padding*2)/6.0;
+            _preferredRowHeight = (contentHeight-padding*2)/4.0; // 默认四行
         } else {
             _preferredRowHeight = _rowHeight;
         }

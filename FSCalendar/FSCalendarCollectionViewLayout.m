@@ -121,13 +121,13 @@
             CGFloat height = FSCalendarStandardRowHeight;
             if (!self.calendar.floatingMode) {
                 switch (self.calendar.transitionCoordinator.representingScope) {
-                        // 给定6行
+                        // 给定4行
                     case FSCalendarScopeMonth: {
-                        height = (self.collectionView.fs_height-self.sectionInsets.top-self.sectionInsets.bottom)/6.0;
+                        height = (self.collectionView.fs_height-self.sectionInsets.top-self.sectionInsets.bottom)/4.0;
                         break;
                     }
                     case FSCalendarScopeWeek: {
-                        height = (self.collectionView.fs_height-self.sectionInsets.top-self.sectionInsets.bottom);
+                        height = (self.collectionView.fs_height-self.sectionInsets.top-self.sectionInsets.bottom)/2;
                         break;
                     }
                     default:
@@ -168,7 +168,7 @@
     // Calculate item heights and tops
     free(self.heights);
     self.heights = ({
-        NSInteger rowCount = self.calendar.transitionCoordinator.representingScope == FSCalendarScopeWeek ? 1 : 6;
+        NSInteger rowCount = self.calendar.transitionCoordinator.representingScope == FSCalendarScopeWeek ? 2 : 4;
         size_t rowSize = sizeof(CGFloat)*rowCount;
         CGFloat *heights = malloc(rowSize);
         if (!self.calendar.floatingMode) {
@@ -184,7 +184,7 @@
     
     free(self.tops);
     self.tops = ({
-        NSInteger rowCount = self.calendar.transitionCoordinator.representingScope == FSCalendarScopeWeek ? 1 : 6;
+        NSInteger rowCount = self.calendar.transitionCoordinator.representingScope == FSCalendarScopeWeek ? 2 : 4;
         size_t rowSize = sizeof(CGFloat)*rowCount;
         CGFloat *tops = malloc(rowSize);
         tops[0] = self.sectionInsets.top;
@@ -293,7 +293,7 @@
                     endColumn;
                 });
                 
-                NSInteger numberOfRows = self.calendar.transitionCoordinator.representingScope == FSCalendarScopeMonth ? 6 : 1;
+                NSInteger numberOfRows = self.calendar.transitionCoordinator.representingScope == FSCalendarScopeMonth ? 4 : 2;
                 
                 for (NSInteger column = startColumn; column <= endColumn; column++) {
                     for (NSInteger row = 0; row < numberOfRows; row++) {
@@ -319,7 +319,7 @@
                     CGFloat heightDelta = FSCalendarMod(CGRectGetMinY(rect), self.collectionView.fs_height)-self.sectionInsets.top;
                     heightDelta = MIN(MAX(0, heightDelta), self.collectionView.fs_height-self.sectionInsets.top);
                     NSInteger countDelta = FSCalendarFloor(heightDelta/self.estimatedItemSize.height);
-                    NSInteger startRow = startSection*6 + countDelta;
+                    NSInteger startRow = startSection*4 + countDelta;
                     startRow;
                 });
                 
@@ -329,20 +329,20 @@
                     CGFloat remainder = FSCalendarMod(section, 1);
                     // https://stackoverflow.com/a/10335601/2398107
                     if (remainder <= MAX(100*FLT_EPSILON*ABS(remainder), FLT_MIN)) {
-                        endRow = FSCalendarFloor(section)*6 - 1;
+                        endRow = FSCalendarFloor(section)*4 - 1;
                     } else {
                         CGFloat heightDelta = FSCalendarMod(CGRectGetMaxY(rect), self.collectionView.fs_height)-self.sectionInsets.top;
                         heightDelta = MIN(MAX(0, heightDelta), self.collectionView.fs_height-self.sectionInsets.top);
                         NSInteger countDelta = FSCalendarCeil(heightDelta/self.estimatedItemSize.height);
-                        endRow = FSCalendarFloor(section)*6 + countDelta-1;
+                        endRow = FSCalendarFloor(section)*4 + countDelta-1;
                     }
                     endRow;
                 });
                 
                 for (NSInteger row = startRow; row <= endRow; row++) {
                     for (NSInteger column = 0; column < 7; column++) {
-                        NSInteger section = row / 6;
-                        NSInteger item = column + (row % 6) * 7;
+                        NSInteger section = row / 4;
+                        NSInteger item = column + (row % 4) * 7;
                         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:section];
                         UICollectionViewLayoutAttributes *itemAttributes = [self layoutAttributesForItemAtIndexPath:indexPath];
                         [layoutAttributes addObject:itemAttributes];

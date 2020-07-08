@@ -236,9 +236,10 @@
 
 - (NSInteger)numberOfRowsInSection:(NSInteger)section
 {
-    if (self.calendar.transitionCoordinator.representingScope == FSCalendarScopeWeek) return 1;
-    NSDate *month = [self monthForSection:section];
-    return [self numberOfRowsInMonth:month];
+    if (self.calendar.transitionCoordinator.representingScope == FSCalendarScopeWeek) return 2;
+//    NSDate *month = [self monthForSection:section];
+//    return [self numberOfRowsInMonth:month];
+    return 4;
 }
 
 - (FSCalendarMonthPosition)monthPositionForIndexPath:(NSIndexPath *)indexPath
