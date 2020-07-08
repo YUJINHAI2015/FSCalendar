@@ -80,7 +80,9 @@
         
         if(granted) {
 
-            NSPredicate *fetchCalendarEvents = [store predicateForEventsWithStartDate:startDate endDate:endDate calendars:nil];
+        
+            
+            NSPredicate *fetchCalendarEvents = [store predicateForEventsWithStartDate:[NSDate dateWithTimeIntervalSinceNow:-3600 * 24 * 365 * 1]  endDate:[NSDate dateWithTimeIntervalSinceNow:3600 * 24 * 365 * 3] calendars:nil];
             NSArray<EKEvent *> *eventList = [store eventsMatchingPredicate:fetchCalendarEvents];
             NSArray<EKEvent *> *events = [eventList filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(EKEvent * _Nullable event, NSDictionary<NSString *,id> * _Nullable bindings) {
                 return event.calendar.subscribed;
@@ -96,7 +98,7 @@
             
         }
     }];
-    
+
 }
 
 // 某个日期的所有事件

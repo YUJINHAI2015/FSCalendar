@@ -61,11 +61,11 @@
 - (void)p_initUI {
     [self.calendar mas_makeConstraints:^(MASConstraintMaker *make) {
         // 450 for iPad and 300 for iPhone
-        CGFloat height = [[UIDevice currentDevice].model hasPrefix:@"iPad"] ? 450 : 316;
+        CGFloat height = [[UIDevice currentDevice].model hasPrefix:@"iPad"] ? 450 : 250;
         make.height.mas_equalTo(height);
         make.top.mas_equalTo(self.view.mas_top).offset(0);
-        make.leading.mas_equalTo(self.view.mas_leading).offset(Calendar_Marge);
-        make.trailing.mas_equalTo(self.view.mas_trailing).offset(-Calendar_Marge);
+        make.leading.mas_equalTo(self.view.mas_leading);
+        make.trailing.mas_equalTo(self.view.mas_trailing);
     }];
 
     [self.calendarSubViewController.view mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -126,7 +126,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"yyyy-MM-dd";
     
-    NSDate *minimumDate = [self.dateFormatter dateFromString:@"2020-01-01"];
+    NSDate *minimumDate = [self.dateFormatter dateFromString:@"2000-01-01"];
 
     return minimumDate;
 }
@@ -147,7 +147,7 @@
 }
 
 #pragma mark - <FSCalendarDelegate>
-    
+
 - (void)calendar:(FSCalendar *)calendar boundingRectWillChange:(CGRect)bounds animated:(BOOL)animated
 {
     [self.calendar mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -186,11 +186,20 @@
     NSInteger week = [[myCalendar components:NSCalendarUnitWeekday fromDate:date] weekday];
     
     if (week == 1 || week == 7) {
-        return Calendar_Selected_TextColor(0.6);
+        return [UIColor lightGrayColor];
     }
     return nil;
 }
-
+- (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance subtitleDefaultColorForDate:(NSDate *)date {
+    NSCalendar * myCalendar = [NSCalendar currentCalendar];
+    myCalendar.timeZone = [NSTimeZone systemTimeZone];
+    NSInteger week = [[myCalendar components:NSCalendarUnitWeekday fromDate:date] weekday];
+    
+    if (week == 1 || week == 7) {
+        return [UIColor lightGrayColor];
+    }
+    return nil;
+}
 - (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleSelectionColorForDate:(NSDate *)date {
     
     if ([[self.dateFormatter stringFromDate:date] isEqualToString:[self.dateFormatter stringFromDate:[NSDate date]]]) {
@@ -228,23 +237,25 @@
         [_calendar addObserver:self forKeyPath:@"scope" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:_KVOContext];
         _calendar.dataSource = self;
         _calendar.delegate = self;
-        _calendar.backgroundColor = Calendar_ContentView_BackgroundColor;
+        _calendar.backgroundColor = [UIColor colorWithRed:241.0/255.0 green:242.0/255.0 blue:243.0/255.0 alpha:1];
         _calendar.allowsMultipleSelection = YES;
         _calendar.swipeToChooseGesture.enabled = YES;
+//        _calendar.floatingMode = YES;
 //        _calendar = (FSCalendar *)[WOPCTLBaseHelper ctl_addShadowForView:_calendar];
 //        _calendar = (FSCalendar *)[WOPCTLBaseHelper ctl_addRoundingCorners:_calendar];
         // 星期一
         _calendar.firstWeekday = 1;
-//        _calendar.calendarHeaderView.hidden = YES;
+        _calendar.calendarHeaderView.hidden = YES;
+        _calendar.headerHeight = 0;
         
         // 每月未显示日期
-        _calendar.placeholderType = FSCalendarPlaceholderTypeFillHeadTail;
+        _calendar.placeholderType = FSCalendarPlaceholderTypeFillSixRows;
         // 星期缩写
         _calendar.appearance.caseOptions = FSCalendarCaseOptionsWeekdayUsesUpperCase;
         // 显示月份
         _calendar.scope = FSCalendarScopeMonth;
         // 显示今日
-        [_calendar selectDate:[NSDate date] scrollToDate:YES];
+//        [_calendar selectDate:[NSDate date] scrollToDate:YES];
         // For UITest
         _calendar.accessibilityIdentifier = @"calendar";
         // 星期数字颜色
@@ -254,11 +265,15 @@
         // 星期大写
         _calendar.appearance.headerDateFormat = @"MMMM";
         // 默认数字颜色
-        _calendar.appearance.titleDefaultColor = Calendar_Normal_TextColor;
+//        _calendar.appearance.subtitleWeekendColor = [UIColor lightGrayColor];
+        _calendar.appearance.titleDefaultColor = [UIColor blackColor];
+        _calendar.appearance.subtitlePlaceholderColor = [UIColor blackColor];
+        _calendar.appearance.subtitleDefaultColor = [UIColor blackColor];
+        _calendar.appearance.titlePlaceholderColor = [UIColor blackColor];
         // 选中数字颜色
         _calendar.appearance.titleSelectionColor = Calendar_Normal_TextColor;
         // 数字大小
-        _calendar.appearance.titleFont = ctl_FontPingFangSC_Semibold(14);
+        _calendar.appearance.titleFont = ctl_FontPingFangSC_Regular(18);
         // 选中背景颜色
         _calendar.appearance.selectionColor = Calendar_Selected_TextColor(0.2);
         // 点击今日背景颜色
@@ -266,9 +281,9 @@
         // 选中今日背景颜色
         _calendar.appearance.todaySelectionColor = Calendar_Selected_TextColor(0.2);
         // 星期六的颜色
-        _calendar.calendarWeekdayView.weekdayLabels[6].textColor = Calendar_Selected_TextColor(0.6);
+        _calendar.calendarWeekdayView.weekdayLabels[6].textColor = [UIColor lightGrayColor];
         // 星期日的颜色
-        _calendar.calendarWeekdayView.weekdayLabels[5].textColor = Calendar_Selected_TextColor(0.6);
+        _calendar.calendarWeekdayView.weekdayLabels[0].textColor = [UIColor lightGrayColor];
         
         [self.view addSubview:_calendar];
     }
