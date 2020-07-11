@@ -221,7 +221,7 @@
 {
     switch (self.transitionAttributes.targetScope) {
         case FSCalendarScopeWeek: {
-            self.collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+            self.collectionViewLayout.scrollDirection = self.collectionViewLayout.scrollDirection;
             self.calendar.calendarHeaderView.scrollDirection = self.collectionViewLayout.scrollDirection;
             self.calendar.needsAdjustingViewFrame = YES;
             [self.collectionView reloadData];

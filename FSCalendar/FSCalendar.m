@@ -314,7 +314,7 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
                     break; // 20+230  55 * 4 + 10 = 230
                 }
                 case FSCalendarScopeWeek: {
-                    CGFloat contentHeight = headerHeight + 2 * rowHeight + padding*2;
+                    CGFloat contentHeight =  2 * rowHeight + padding*2;
                     _daysContainer.frame = CGRectMake(0, headerHeight+weekdayHeight, self.fs_width, contentHeight);
                     _collectionView.frame = CGRectMake(0, 0, _daysContainer.fs_width, contentHeight);
                     break; // 20 + (55 * 2 + 10)
@@ -377,7 +377,7 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     [self requestBoundingDatesIfNecessary];
-    return self.calculator.numberOfSections; // 返回月份
+    return self.calculator.numberOfSections; // 返回月份,星期
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -390,7 +390,7 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
         case FSCalendarScopeMonth: {
             return 28;
         }
-        case FSCalendarScopeWeek: {
+        case FSCalendarScopeWeek: { // 每星期返回多少天
             return 14;
         }
     }
@@ -1142,11 +1142,19 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
     
     date = [self.calculator safeDateForDate:date];
     NSInteger scrollOffset = [self.calculator indexPathForDate:date atMonthPosition:FSCalendarMonthPositionCurrent].section;
-    
+    NSInteger index = 0 ; // 计算日期在两行week哪一行
+    if (self.transitionCoordinator.representingScope == FSCalendarScopeWeek) {
+        scrollOffset = scrollOffset / 2;
+        
+        index = [self.calculator weekIndex:date atIndex:scrollOffset];
+        scrollOffset = scrollOffset ;
+    }
+    //0   1  2   3  4  56
+    //01,23, 45,67, 89
     if (!self.floatingMode) {
         switch (_collectionViewLayout.scrollDirection) {
             case UICollectionViewScrollDirectionVertical: {
-                [_collectionView setContentOffset:CGPointMake(0, scrollOffset * _collectionView.fs_height) animated:animated];
+                [_collectionView setContentOffset:CGPointMake(0, scrollOffset * _collectionView.fs_height + self.rowHeight * index + 5) animated:animated];
                 break;
             }
             case UICollectionViewScrollDirectionHorizontal: {
@@ -1174,32 +1182,35 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
         if (!date) return;
     }
     
-    if (!self.floatingMode) {
-        if ([self isDateInDifferentPage:date]) {
-            [self willChangeValueForKey:@"currentPage"];
-            NSDate *lastPage = _currentPage;
-            switch (self.transitionCoordinator.representingScope) {
-                case FSCalendarScopeMonth: {
-                    _currentPage = [self.gregorian fs_firstDayOfMonth:date];
-                    break;
-                }
-                case FSCalendarScopeWeek: {
-                    _currentPage = [self.gregorian fs_firstDayOfWeek:date];
-                    break;
-                }
-            }
-            if (self.hasValidateVisibleLayout) {
-                [self.delegateProxy calendarCurrentPageDidChange:self];
-                if (_placeholderType != FSCalendarPlaceholderTypeFillSixRows && self.transitionCoordinator.state == FSCalendarTransitionStateIdle) {
-                    [self.transitionCoordinator performBoundingRectTransitionFromMonth:lastPage toMonth:_currentPage duration:0.33];
-                }
-            }
-            [self didChangeValueForKey:@"currentPage"];
-        }
-        [self scrollToDate:_currentPage animated:animated];
-    } else {
-        [self scrollToDate:[self.gregorian fs_firstDayOfMonth:date] animated:animated];
-    }
+//    if (!self.floatingMode) {
+//        if ([self isDateInDifferentPage:date]) {
+//            [self willChangeValueForKey:@"currentPage"];
+//            NSDate *lastPage = _currentPage;
+//            switch (self.transitionCoordinator.representingScope) {
+//                case FSCalendarScopeMonth: {
+//                    _currentPage = [self.gregorian fs_firstDayOfMonth:date];
+//                    break;
+//                }
+//                case FSCalendarScopeWeek: {
+//                    _currentPage = [self.gregorian fs_firstDayOfWeek:date];
+//                    break;
+//                }
+//            }
+//            if (self.hasValidateVisibleLayout) {
+//                [self.delegateProxy calendarCurrentPageDidChange:self];
+//                if (_placeholderType != FSCalendarPlaceholderTypeFillSixRows && self.transitionCoordinator.state == FSCalendarTransitionStateIdle) {
+//                    [self.transitionCoordinator performBoundingRectTransitionFromMonth:lastPage toMonth:_currentPage duration:0.33];
+//                }
+//            }
+//            [self didChangeValueForKey:@"currentPage"];
+//        }
+//        [self scrollToDate:_currentPage animated:animated];
+//    } else {
+//        [self scrollToDate:[self.gregorian fs_firstDayOfMonth:date] animated:animated];
+//    }
+    // 默认选中最后一个日期
+    [self scrollToDate:date animated:animated];
+
 }
 
 
@@ -1524,7 +1535,9 @@ typedef NS_ENUM(NSUInteger, FSCalendarOrientation) {
 - (void)adjustMonthPosition
 {
     [self requestBoundingDatesIfNecessary];
-    NSDate *targetPage = self.pagingEnabled?self.currentPage:(self.currentPage?:self.selectedDate);
+//    NSDate *targetPage = self.pagingEnabled?self.currentPage:(self.currentPage?:self.selectedDate);
+    // 默认定位到选中日期
+    NSDate *targetPage = self.selectedDate ? self.selectedDate : [NSDate date];
     [self scrollToPageForDate:targetPage animated:NO];
 }
 

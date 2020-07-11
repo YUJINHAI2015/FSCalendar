@@ -190,12 +190,25 @@
     NSNumber *key = @(section);
     NSDate *week = self.weeks[key];
     if (!week) {
-        week = [self.gregorian dateByAddingUnit:NSCalendarUnitWeekOfYear value:section toDate:[self.gregorian fs_firstDayOfWeek:self.minimumDate] options:0];
+        NSDate *date = [self.gregorian fs_firstDayOfWeek:self.minimumDate] ;
+        NSDate *week1 = [self.gregorian dateByAddingUnit:NSCalendarUnitWeekOfYear value:section toDate:date options:0];
+        week = [self.gregorian dateByAddingUnit:NSCalendarUnitWeekOfYear value:section toDate:week1 options:0];
         self.weeks[key] = week;
     }
     return week;
 }
 
+- (NSInteger)weekIndex:(NSDate *)date atIndex:(NSInteger)section {
+    
+    NSDate *week = [self.weeks objectForKey:@(section)];
+    if (week) {
+
+        NSDateComponents *delta = [[NSCalendar currentCalendar] components:NSCalendarUnitDay fromDate:week toDate:date options:0];
+        return delta.day > 7;
+    }
+    
+    return 0;
+}
 - (NSInteger)numberOfSections
 {
     switch (self.calendar.transitionCoordinator.representingScope) {

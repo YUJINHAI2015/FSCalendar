@@ -46,4 +46,6 @@ typedef struct FSCalendarCoordinate FSCalendarCoordinate;
 
 - (void)reloadSections;
 
+- (NSInteger)weekIndex:(NSDate *)date atIndex:(NSInteger)section;
+
 @end

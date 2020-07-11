@@ -136,7 +136,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"yyyy-MM-dd";
     
-    NSDate *maximumDate = [self.dateFormatter dateFromString:@"2020-03-01"];
+    NSDate *maximumDate = [self.dateFormatter dateFromString:@"2020-04-01"];
 
     return maximumDate;
 }
